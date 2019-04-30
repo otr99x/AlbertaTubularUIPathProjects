@@ -1,0 +1,1390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Darren Wu (Digital Oilfield Inc.) -->
+<schema xmlns:ocp="http://www.digitaloilfield.com/ocp" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.digitaloilfield.com/ocp" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.55">
+    <annotation>
+        <documentation>
+            Schema Name: ocpLibrary
+            Copyright:  2014 by ADP P2P Canada, Inc. All rights reserved.
+            Schema Version Number:  1.55
+            Version Date:   2014-07-07
+            Application:    OpenInvoice
+            Usage Note: External
+        </documentation>
+    </annotation>
+    <!--****************  Simple Types -->
+    <simpleType name="descriptionType">
+        <restriction base="ocp:String100"/>
+    </simpleType>
+    <simpleType name="referenceInformationIndicatorType">
+        <restriction base="string">
+            <maxLength value="35"/>
+            <enumeration value="DCRLineGUID"/>
+            <enumeration value="Other"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="referenceNumberType">
+        <restriction base="string">
+            <maxLength value="50"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="definitionOfOtherType">
+        <restriction base="string">
+            <maxLength value="35"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String1000">
+        <restriction base="string">
+            <maxLength value="1000"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String255">
+        <restriction base="string">
+            <maxLength value="255"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String200">
+        <restriction base="string">
+            <maxLength value="200"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String100">
+        <restriction base="string">
+            <maxLength value="100"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String50">
+        <restriction base="string">
+            <maxLength value="50"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String25">
+        <restriction base="string">
+            <maxLength value="25"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String35">
+        <restriction base="string">
+            <maxLength value="35"/>
+        </restriction>
+    </simpleType>
+    <!--****************  Complex Types -->
+    <complexType name="actionPersonType">
+        <complexContent>
+            <extension base="ocp:personType">
+                <sequence>
+                    <element ref="ocp:Site" minOccurs="0"/>
+                    <element ref="ocp:DepartmentOrGroup" minOccurs="0"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="actionTargetType">
+        <complexContent>
+            <extension base="ocp:oiPersonType">
+                <sequence>
+                    <element name="Site" type="ocp:oiSiteType" minOccurs="0"/>
+                    <element name="DepartmentOrGroup" type="ocp:departmentOrGroupType" minOccurs="0"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    <complexType name="alertType">
+        <sequence>
+            <element name="AlertType" type="string" minOccurs="0"/>
+            <element name="Description" type="ocp:String200" minOccurs="0"/>
+            <element name="ReferenceInformation" type="ocp:referenceInformationType" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="code" use="required">
+            <simpleType>
+                <restriction base="string">
+                    <enumeration value="RED"/>
+                    <enumeration value="AMBER"/>
+                    <enumeration value="BLUE"/>
+                    <enumeration value="GREEN"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+    <complexType name="departmentOrGroupType">
+        <sequence>
+            <element name="DepartmentCode" type="string" minOccurs="0"/>
+            <element name="DepartmentName" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String50"/>
+                </simpleType>
+            </element>
+            <element ref="ocp:Description" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType name="documentCrossRefType">
+        <sequence>
+            <element name="DocumentNumber">
+                <simpleType>
+                    <restriction base="ocp:String35"/>
+                </simpleType>
+            </element>
+            <element ref="ocp:DocumentType"/>
+            <element ref="ocp:Date" minOccurs="0"/>
+            <element name="LineItemNumber" type="string" minOccurs="0"/>
+            <element name="Description" type="ocp:descriptionType" minOccurs="0"/>
+            <element name="XRefCode" minOccurs="0" maxOccurs="unbounded">
+                <complexType>
+                    <simpleContent>
+                        <extension base="string">
+                            <attribute name="codetype" type="string" use="required"/>
+                        </extension>
+                    </simpleContent>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="oiAddressType">
+        <sequence>
+            <element name="AddressLine" minOccurs="0" maxOccurs="4">
+                <simpleType>
+                    <restriction base="ocp:String100"/>
+                </simpleType>
+            </element>
+            <element name="City" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String50"/>
+                </simpleType>
+            </element>
+            <element name="StateProvince" type="string" minOccurs="0"/>
+            <element name="StateProvinceCode" type="string" minOccurs="0"/>
+            <element name="Country" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String50"/>
+                </simpleType>
+            </element>
+            <element name="CountryCode" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String25"/>
+                </simpleType>
+            </element>
+            <element name="PostalZipCode" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String25"/>
+                </simpleType>
+            </element>
+            <element name="PhoneNumber" type="ocp:phoneNumType" minOccurs="0" maxOccurs="4"/>
+            <element name="EmailAddress" type="ocp:String100" minOccurs="0"/>
+        </sequence>
+        <attribute name="addressIndicator">
+            <simpleType>
+                <restriction base="string">
+                    <enumeration value="Mailing"/>
+                    <enumeration value="Delivery"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+    <complexType name="oiPersonType">
+        <sequence>
+            <element name="FirstName" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String25"/>
+                </simpleType>
+            </element>
+            <element name="Initial" minOccurs="0">
+                <simpleType>
+                    <restriction base="string">
+                        <maxLength value="1"/>
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="LastName" minOccurs="0">
+                <simpleType>
+                    <restriction base="ocp:String25"/>
+                </simpleType>
+            </element>
+            <element name="PhoneNumber" type="ocp:phoneNumType" minOccurs="0" maxOccurs="4"/>
+            <element name="PersonIdentifier" minOccurs="0" maxOccurs="2">
+                <complexType>
+                    <simpleContent>
+                        <extension base="ocp:String25">
+                            <attribute name="personIdentifierIndicator" use="required">
+                                <simpleType>
+                                    <restriction base="string">
+                                        <enumeration value="EmployeeNumber"/>
+                                    </restriction>
+                                </simpleType>
+                            </attribute>
+                        </extension>
+                    </simpleContent>
+                </complexType>
+            </element>
+            <element name="EmailAddress" type="ocp:String100" minOccurs="0"/>
+        </sequence>
+        <attribute name="role" use="optional">
+            <simpleType>
+                <restriction base="string">
+                    <enumeration value="Contact"/>
+                    <enumeration value="DocumentActionPerformer"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+    <complexType name="oiSiteType">
+        <sequence>
+            <element name="SiteCode" minOccurs="0" maxOccurs="3">
+                <complexType>
+                    <simpleContent>
+                        <extension base="string">
+                            <attribute name="siteCodeIndicator" use="required">
+                                <simpleType>
+                                    <restriction base="string">
+                                        <enumeration value="AssignedByBuyer"/>
+                                        <enumeration value="AssignedBySeller"/>
+                                    </restriction>
+                                </simpleType>
+                            </attribute>
+                        </extension>
+                    </simpleContent>
+                </complexType>
+            </element>
+            <element name="SiteName">
+                <simpleType>
+                    <restriction base="ocp:String50"/>
+                </simpleType>
+            </element>
+            <element name="Address" type="ocp:oiAddressType" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <complexType name="personType">
+        <sequence>
+            <element ref="ocp:FirstName"/>
+            <element ref="ocp:Initial" minOccurs="0"/>
+            <element ref="ocp:LastName"/>
+            <element ref="ocp:PhoneNumber" minOccurs="0" maxOccurs="4"/>
+            <element ref="ocp:PersonIdentifier" minOccurs="0" maxOccurs="2"/>
+            <element ref="ocp:EmailAddress" minOccurs="0"/>
+        </sequence>
+        <attribute name="Role" use="optional">
+            <simpleType>
+                <restriction base="string">
+                    <enumeration value="Contact"/>
+                    <enumeration value="DocumentActionPerformer"/>
+                </restriction>
+            </simpleType>
+        </attribute>
+    </complexType>
+    <complexType name="phoneNumType">
+        <simpleContent>
+            <extension base="ocp:String50">
+                <attribute name="phoneNumberIndicator">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="Primary"/>
+                            <enumeration value="Secondary"/>
+                            <enumeration value="Fax"/>
+                        </restriction>
+                    </simpleType>
+                </attribute>
+            </extension>
+        </simpleContent>
+    </complexType>
+    <complexType name="referenceDataType">
+        <sequence>
+            <element name="Value" type="string"/>
+            <element name="Code" type="string" minOccurs="0"/>
+            <element name="Description" type="string" minOccurs="0"/>
+        </sequence>
+        <attribute name="code" type="string" use="required"/>
+        <attribute name="name" type="string" use="optional"/>
+        <attribute name="typeFormat" type="string" use="optional"/>
+        <attribute name="type" type="string" use="optional"/>
+    </complexType>
+    <complexType name="referenceInformationType">
+        <sequence>
+            <element name="ReferenceNumber" type="ocp:referenceNumberType" minOccurs="0"/>
+            <element ref="ocp:Description" minOccurs="0"/>
+        </sequence>
+        <attribute name="referenceInformationIndicator" type="ocp:referenceInformationIndicatorType" use="required"/>
+        <attribute name="definitionOfOther" type="ocp:definitionOfOtherType"/>
+    </complexType>
+    <!--****************  Elements -->
+    <element name="AccountInformation">
+        <annotation>
+            <documentation>Major, minor, subcode</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:MajorAccount" minOccurs="0"/>
+                <element ref="ocp:MinorAccount" minOccurs="0"/>
+                <element ref="ocp:SubCode" minOccurs="0"/>
+                <element ref="ocp:ActivityCode" minOccurs="0"/>
+                <element ref="ocp:EntityCode" minOccurs="0"/>
+                <element name="ExtendedCode" minOccurs="0" maxOccurs="8">
+                    <complexType>
+                        <simpleContent>
+                            <extension base="string">
+                                <attribute name="Sequence" type="integer" use="required"/>
+                            </extension>
+                        </simpleContent>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="ActivityCode">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="AccountNumber">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="AdditionalData">
+        <annotation>
+            <documentation>DEPRECATED. Use ReferenceData tags instead.</documentation>
+        </annotation>
+        <complexType>
+            <simpleContent>
+                <extension base="ocp:String1000">
+                    <attribute name="internal_code" type="string" use="required"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="Address">
+        <complexType>
+            <sequence>
+                <element name="AddressLine" minOccurs="0" maxOccurs="4">
+                    <simpleType>
+                        <restriction base="ocp:String100"/>
+                    </simpleType>
+                </element>
+                <element name="City" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String50"/>
+                    </simpleType>
+                </element>
+                <element name="StateProvince" type="string" minOccurs="0"/>
+                <element name="StateProvinceCode" type="string" minOccurs="0"/>
+                <element name="Country" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String50"/>
+                    </simpleType>
+                </element>
+                <element name="CountryCode" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element name="PostalZipCode" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:PhoneNumber" minOccurs="0" maxOccurs="4"/>
+                <element ref="ocp:EmailAddress" minOccurs="0"/>
+            </sequence>
+            <attribute name="AddressType">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Mailing"/>
+                        <enumeration value="Delivery"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="AFE">
+        <annotation>
+            <documentation>Authorization For Expenditure</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:AFENumber"/>
+                <element ref="ocp:AFEName" minOccurs="0"/>
+                <element ref="ocp:Comments" minOccurs="0"/>
+                <element ref="ocp:Site" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:DataEntityAction" minOccurs="0"/>
+                <element ref="ocp:LocationOrWell" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:FieldLease" minOccurs="0"/>
+                <element name="AFEType" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:LinkedAccount" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:EntityCode" minOccurs="0"/>
+                <element ref="ocp:Owner" minOccurs="0"/>
+                <element name="LinkedCostObject" minOccurs="0" maxOccurs="unbounded">
+                    <simpleType>
+                        <restriction base="ocp:String50"/>
+                    </simpleType>
+                </element>
+                <element name="Restriction" type="ocp:Restriction" minOccurs="0"/>
+            </sequence>
+            <attribute ref="ocp:ocpId" use="optional"/>
+        </complexType>
+    </element>
+    <element name="AFEName">
+        <annotation>
+            <documentation>Name of the Property, Project or Well. If the AFE is for a single well, this will likely be the same as LocationOrWellName.</documentation>
+        </annotation>
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <element name="AFENumber">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="ApprovalLevel">
+        <complexType>
+            <sequence>
+                <element ref="ocp:ApprovalLevelName"/>
+                <element ref="ocp:Description" minOccurs="0"/>
+                <element ref="ocp:AuthorizationDollarLimit"/>
+                <element ref="ocp:DataEntityAction" minOccurs="0"/>
+            </sequence>
+            <attribute ref="ocp:ocpId" use="optional"/>
+        </complexType>
+    </element>
+    <element name="ApprovalLevelName">
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <element name="AuthorizationDollarLimit">
+        <simpleType>
+            <restriction base="decimal">
+                <maxInclusive value="999999999999"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="ArchiveData">
+        <annotation>
+            <documentation>Denotes the file path, name and mask to use for saving to or retrieving from the file system</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="FilePath" type="string" minOccurs="0"/>
+                <element name="FileMask" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="AssetNumber">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="Categorization">
+        <annotation>
+            <documentation>SSI, Charge Type, UNSPSC, or other category for products/services</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="CategoryCode" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String100"/>
+                    </simpleType>
+                </element>
+            </sequence>
+            <attribute name="CategorizationScheme" use="required">
+                <annotation>
+                    <documentation>The values 'AssignedByBuyer' and 'AssignedBySeller' are deprecated. Refer to 'schemeIndicator' attribute for these two values.</documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="ocpSSIservice"/>
+                        <enumeration value="ocpChargeType"/>
+                        <enumeration value="UNSPSC"/>
+                        <enumeration value="AssignedByBuyer"/>
+                        <enumeration value="AssignedBySeller"/>
+                        <enumeration value="ocpSSIsubservice"/>
+                        <enumeration value="ocpSSIcategory"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+            <attribute name="schemeIndicator" use="optional">
+                <annotation>
+                    <documentation>This attribute provides a further explanation for the 'CategorizationScheme' attribute.</documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="AssignedByBuyer"/>
+                        <enumeration value="AssignedBySeller"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="Code" type="ocp:String25"/>
+    <element name="Coding">
+        <annotation>
+            <documentation>Breakdown of allocation charges</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:RateOrPercentage"/>
+                <element ref="ocp:Total"/>
+                <element ref="ocp:AFENumber" minOccurs="0"/>
+                <element ref="ocp:CostCenterNumber" minOccurs="0"/>
+                <element ref="ocp:LocationOrWell" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:FieldLease" minOccurs="0"/>
+                <element ref="ocp:AccountInformation" minOccurs="0"/>
+                <element ref="ocp:Tax" minOccurs="0"/>
+                <element ref="ocp:AssetNumber" minOccurs="0"/>
+                <element ref="ocp:PurchaseOrderNumber" minOccurs="0"/>
+                <element ref="ocp:WorkOrderNumber" minOccurs="0"/>
+                <element ref="ocp:SelfAssessedTax" minOccurs="0"/>
+                <element ref="ocp:AdditionalData" minOccurs="0" maxOccurs="unbounded"/>
+                <element name="ReferenceData" type="ocp:referenceDataType" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:EarlyPay" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="CompanyName" type="string"/>
+    <element name="Comments">
+        <simpleType>
+            <restriction base="ocp:String255"/>
+        </simpleType>
+    </element>
+    <element name="Contact">
+        <complexType>
+            <sequence>
+                <element name="ContactNameOrLocation" type="string"/>
+                <element ref="ocp:CompanyName"/>
+                <element ref="ocp:LongDescription" minOccurs="0"/>
+                <element ref="ocp:Person" minOccurs="0"/>
+                <element ref="ocp:EmailAddress" minOccurs="0"/>
+                <element ref="ocp:PhoneNumber" minOccurs="0" maxOccurs="2"/>
+                <element name="Address" type="string" minOccurs="0"/>
+            </sequence>
+            <attribute name="contactType" use="required">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Buyer"/>
+                        <enumeration value="Delivered To"/>
+                        <enumeration value="Engineer"/>
+                        <enumeration value="Entered By"/>
+                        <enumeration value="Field Representative"/>
+                        <enumeration value="Office Rep."/>
+                        <enumeration value="Ordered By"/>
+                        <enumeration value="Purchased By"/>
+                        <enumeration value="Quoted By"/>
+                        <enumeration value="Requested By"/>
+                        <enumeration value="RFQ Rep."/>
+                        <enumeration value="Service Representative"/>
+                        <enumeration value="Technical Representative"/>
+                        <enumeration value="Other"/>
+                        <enumeration value="Bill To"/>
+                        <enumeration value="Ship To"/>
+                        <enumeration value="Carrier"/>
+                        <enumeration value="Received By"/>
+                        <enumeration value="Manufactured By"/>
+                        <enumeration value="Issued By"/>
+                        <enumeration value="Contractor"/>
+                        <enumeration value="Paid By"/>
+                        <enumeration value="Pay To"/>
+                        <enumeration value="Seller"/>
+                        <enumeration value="Ship From"/>
+                        <enumeration value="Sold To"/>
+                        <enumeration value="Third Party"/>
+                        <enumeration value="Warehouse"/>
+                        <enumeration value="FOB"/>
+                        <enumeration value="Sales Representative"/>
+                        <enumeration value="Approver"/>
+                        <enumeration value="Requisitioner"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="CostCenter">
+        <complexType>
+            <sequence>
+                <element ref="ocp:CostCenterNumber"/>
+                <element ref="ocp:CostCenterName" minOccurs="0"/>
+                <element ref="ocp:Comments" minOccurs="0"/>
+                <element ref="ocp:Site" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:DataEntityAction" minOccurs="0"/>
+                <element ref="ocp:LocationOrWell" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:FieldLease" minOccurs="0"/>
+                <element name="CostCenterType" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:LinkedAccount" minOccurs="0" maxOccurs="unbounded"/>
+                <element ref="ocp:EntityCode" minOccurs="0"/>
+                <element ref="ocp:Owner" minOccurs="0"/>
+                <element name="Restriction" type="ocp:Restriction" minOccurs="0"/>
+            </sequence>
+            <attribute ref="ocp:ocpId" use="optional"/>
+        </complexType>
+    </element>
+    <element name="CostCenterName">
+        <annotation>
+            <documentation>Name of the Property, Well, or Entity. If the Cost Center is for a single well, this will likely be the same as LocationOrWellName.</documentation>
+        </annotation>
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <element name="CostCenterNumber">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="CurrencyCode">
+        <simpleType>
+            <restriction base="string">
+                <maxLength value="8"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="CurrentOwner">
+        <complexType>
+            <choice>
+                <element name="DepartmentOrGroup" type="ocp:departmentOrGroupType"/>
+                <element name="Person" type="ocp:personType"/>
+            </choice>
+        </complexType>
+    </element>
+    <element name="DataEntityAction">
+        <annotation>
+            <documentation>This denotes the action to take (activate, inactivate, delete) on any data entity</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:Date" minOccurs="0"/>
+                <element name="DataEntityActionType">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="Activate"/>
+                            <enumeration value="Inactivate"/>
+                            <enumeration value="Delete"/>
+                            <enumeration value="Decommission"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="Date" type="date">
+        <annotation>
+            <documentation>Deprecated, see TransactionDateTime below</documentation>
+        </annotation>
+    </element>
+    <element name="DaysDue" type="integer"/>
+    <element name="DelegateUser">
+        <annotation>
+            <documentation>Identifies a user authorized to act on behalf of another user, within the context of a specific site for specified dates. If Site is not provided, delegations will be created for all sites that the delegator is a member of.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:PersonIdentifier"/>
+                <element name="FromDate" type="date"/>
+                <element name="ToDate" type="date"/>
+                <element ref="ocp:Site" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="DepartmentOrGroup" type="ocp:departmentOrGroupType"/>
+    <element name="Description">
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <element name="Discount">
+        <complexType>
+            <sequence>
+                <element ref="ocp:Total" minOccurs="0"/>
+                <element ref="ocp:RateOrPercentage" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="DiscountTotal" type="decimal">
+        <annotation>
+            <documentation>Total of all line item discounts.</documentation>
+        </annotation>
+    </element>
+    <element name="DocumentAction">
+        <annotation>
+            <documentation>This denotes submittals, disputes, and approvals on Invoices and Field Tickets</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:Date" minOccurs="0">
+                    <annotation>
+                        <documentation>Deprecated.  Use TransactionDateTime</documentation>
+                    </annotation>
+                </element>
+                <element name="Person" type="ocp:actionPersonType" minOccurs="0">
+                    <annotation>
+                        <documentation>Deprecated, see ActionSource and ActionDestination below.</documentation>
+                    </annotation>
+                </element>
+                <element name="ActionType">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="Save"/>
+                            <enumeration value="Submit"/>
+                            <enumeration value="Approve"/>
+                            <enumeration value="Dispute"/>
+                            <enumeration value="Export"/>
+                            <enumeration value="Comment"/>
+                            <enumeration value="Amend"/>
+                            <enumeration value="Forward"/>
+                            <enumeration value="Cancel"/>
+                            <enumeration value="Code"/>
+                            <enumeration value="Delegate"/>
+                            <enumeration value="Post"/>
+                            <enumeration value="Pay"/>
+                            <enumeration value="PostCancel"/>
+                            <enumeration value="PayCancel"/>
+                            <enumeration value="Cancel Payment"/>
+                            <enumeration value="CostObjectApprove"/>
+                            <enumeration value="CostObjectReject"/>
+                            <enumeration value="Release"/>
+                            <enumeration value="Hold"/>
+                            <enumeration value="ReleaseHold"/>
+                            <enumeration value="Itemize"/>
+                            <enumeration value="ShortPay"/>
+                            <enumeration value="ReleaseForPayment"/>
+                            <enumeration value="Correct"/>
+                            <enumeration value="WorkflowByADP"/>
+                            <enumeration value="WorkflowByClient"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+                <element name="Status" type="string" minOccurs="0"/>
+                <element ref="ocp:LongDescription" minOccurs="0"/>
+                <element name="TransactionDateTime" type="dateTime" minOccurs="0">
+                    <annotation>
+                        <documentation>Exact date and time of the action.  Also used to uniquely identify an action within the system.</documentation>
+                    </annotation>
+                </element>
+                <element name="TransactionIdentifier" type="ocp:String255" minOccurs="0"/>
+                <element name="PaymentIdentifier" type="string" minOccurs="0">
+                    <annotation>
+                        <documentation>Payment identifier for the transaction, e.g., cheque or EFT number</documentation>
+                    </annotation>
+                </element>
+                <element name="ActionSource" type="ocp:actionTargetType" minOccurs="0"/>
+                <element name="ActionDestination" type="ocp:actionTargetType" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="DocumentCrossReference" type="ocp:documentCrossRefType"/>
+    <element name="DocumentNumber" type="string"/>
+    <element name="DocumentType">
+        <simpleType>
+            <restriction base="string">
+                <enumeration value="INVOICE"/>
+                <enumeration value="FIELDTICKET"/>
+                <enumeration value="CONTRACT"/>
+                <enumeration value="INVOICEIMAGE"/>
+                <enumeration value="AFE"/>
+                <enumeration value="CC"/>
+                <enumeration value="USER"/>
+                <enumeration value="DocumentCountRequest"/>
+                <enumeration value="DOCUMENTSTATUSUPDATE"/>
+                <enumeration value="APINVOICE"/>
+                <enumeration value="UAPINVOICE"/>
+                <enumeration value="PURCHASEORDER"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="DocumentIdentifier">
+        <annotation>
+            <documentation>Denotes an internal identifier for a specific document</documentation>
+        </annotation>
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="identifierType">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="DigitalOilfield"/>
+                                <enumeration value="InvoiceNumber"/>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="DueDate" type="date"/>
+    <element name="EarlyPay">
+        <annotation>
+            <documentation>Identifies Contractual Early Pay Discounts</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:Code" minOccurs="0"/>
+                <element ref="ocp:Total"/>
+                <element ref="ocp:RateOrPercentage"/>
+                <element ref="ocp:DueDate"/>
+                <element ref="ocp:DaysDue"/>
+                <element ref="ocp:EligibleFlag"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="EligibleFlag" type="boolean">
+        <annotation>
+            <documentation>Indicates whether an early pay discount was taken</documentation>
+        </annotation>
+    </element>
+    <element name="EmailAddress">
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <element name="EntityCode">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="EquipmentComments">
+        <simpleType>
+            <restriction base="ocp:String255"/>
+        </simpleType>
+    </element>
+    <element name="EquipmentUnitNumber">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="ExchangeRate">
+        <complexType>
+            <sequence>
+                <element ref="ocp:RateOrPercentage"/>
+                <element ref="ocp:Date" minOccurs="0"/>
+                <element name="SourceCurrency" minOccurs="0">
+                    <complexType>
+                        <sequence>
+                            <element ref="ocp:CurrencyCode"/>
+                        </sequence>
+                    </complexType>
+                </element>
+                <element name="TargetCurrency" minOccurs="0">
+                    <complexType>
+                        <sequence>
+                            <element ref="ocp:CurrencyCode"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="FieldLease">
+        <complexType>
+            <sequence>
+                <element name="FieldLeaseCode" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element name="FieldLeaseName" type="ocp:String50" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="FieldTicketInformation">
+        <complexType>
+            <sequence>
+                <element name="FieldTicketNumber">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:Partner"/>
+                <element name="FieldTicketLineItemNumber" type="integer" minOccurs="0"/>
+                <element ref="ocp:Date" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="FirstName">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="Initial">
+        <simpleType>
+            <restriction base="string">
+                <maxLength value="1"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="LastName">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="LineItemDescription">
+        <simpleType>
+            <restriction base="string">
+                <maxLength value="2000"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="LinkedAccount">
+        <complexType>
+            <sequence>
+                <element name="MajorAccountCode" type="ocp:String25"/>
+                <element name="ConfiguredMinorAccounts" minOccurs="0">
+                    <complexType>
+                        <sequence>
+                            <element name="MinorAccountCode" type="ocp:String25" maxOccurs="unbounded"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="LinkedLocationOrWell">
+        <complexType>
+            <sequence>
+                <element ref="ocp:DataEntityAction" minOccurs="0"/>
+                <element ref="ocp:LocationOrWell"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="LineItemNumber" type="integer"/>
+    <element name="LocationOrWell">
+        <complexType>
+            <sequence>
+                <element name="LocationOrWellName" minOccurs="0">
+                    <annotation>
+                        <documentation>Textual name given for a location or well (i.e. well name, facility name, platform name, etc.)</documentation>
+                    </annotation>
+                    <simpleType>
+                        <restriction base="ocp:String100"/>
+                    </simpleType>
+                </element>
+                <element name="LocationOrWellCode" minOccurs="0">
+                    <annotation>
+                        <documentation>Internal company or governing body code that specifically identifies a well bore (i.e. UWI, API number, etc.)</documentation>
+                    </annotation>
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element name="GeographicLocation" minOccurs="0">
+                    <annotation>
+                        <documentation>Lat/Long, GPS Coordinates, DLS, NTS, or other geographic data</documentation>
+                    </annotation>
+                    <simpleType>
+                        <restriction base="ocp:String50"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:DataEntityAction" minOccurs="0"/>
+            </sequence>
+            <attribute name="locationType">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="OriginatingLocation"/>
+                        <enumeration value="DestinationLocation"/>
+                        <enumeration value="Other"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+            <attribute name="default" use="optional" default="false">
+                <annotation>
+                    <documentation>indicate if the current location is a default location</documentation>
+                </annotation>
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="false"/>
+                        <enumeration value="true"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="LongDescription">
+        <simpleType>
+            <restriction base="string">
+                <maxLength value="2000"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="MajorAccount">
+        <complexType>
+            <sequence>
+                <element ref="ocp:AccountNumber"/>
+                <element ref="ocp:Description" minOccurs="0"/>
+                <element name="AccountType" minOccurs="0">
+                    <annotation>
+                        <documentation>Type E or C representing Expense account (E) or Capital account (C).</documentation>
+                    </annotation>
+                    <simpleType>
+                        <restriction base="string">
+                            <length value="1"/>
+                            <enumeration value="C"/>
+                            <enumeration value="E"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="Members">
+        <complexType>
+            <sequence>
+                <element name="Member" maxOccurs="unbounded">
+                    <annotation>
+                        <documentation>Use the optional DataEntityAction tag to remove a person's membership priviledges</documentation>
+                    </annotation>
+                    <complexType>
+                        <sequence>
+                            <element ref="ocp:PersonIdentifier"/>
+                            <element ref="ocp:DataEntityAction" minOccurs="0"/>
+                        </sequence>
+                    </complexType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="MinorAccount">
+        <complexType>
+            <sequence>
+                <element ref="ocp:AccountNumber"/>
+                <element ref="ocp:Description" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="OperationalCategory" type="string">
+        <annotation>
+            <documentation>also referred to as 'Phase Coding'</documentation>
+        </annotation>
+    </element>
+    <element name="Owner">
+        <complexType>
+            <sequence>
+                <element ref="ocp:PersonIdentifier"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="Partner">
+        <complexType>
+            <sequence>
+                <element name="Company">
+                    <complexType>
+                        <sequence>
+                            <element name="CompanyCode" maxOccurs="unbounded">
+                                <complexType>
+                                    <simpleContent>
+                                        <extension base="string">
+                                            <attribute name="CompanyCodeType" use="required">
+                                                <simpleType>
+                                                    <restriction base="string">
+                                                        <enumeration value="DUNSnumber"/>
+                                                        <enumeration value="VendorNumber"/>
+                                                        <enumeration value="OriginalVendorNumber"/>
+                                                        <enumeration value="CustomerNumber"/>
+                                                        <enumeration value="DUNS+4"/>
+                                                        <enumeration value="TaxNumber"/>
+                                                        <enumeration value="PhoneNumber"/>
+                                                        <enumeration value="DepartmentCode"/>
+                                                    </restriction>
+                                                </simpleType>
+                                            </attribute>
+                                        </extension>
+                                    </simpleContent>
+                                </complexType>
+                            </element>
+                            <element ref="ocp:CompanyName" minOccurs="0"/>
+                        </sequence>
+                    </complexType>
+                </element>
+                <element ref="ocp:Site" minOccurs="0"/>
+                <element ref="ocp:Person" minOccurs="0"/>
+                <element ref="ocp:DepartmentOrGroup" minOccurs="0"/>
+            </sequence>
+            <attribute name="PartnerType">
+                <simpleType>
+                    <restriction base="string">
+                        <enumeration value="Supplier"/>
+                        <enumeration value="Buyer"/>
+                        <enumeration value="B2BDocumentSender"/>
+                        <enumeration value="B2BDocumentReceiver"/>
+                    </restriction>
+                </simpleType>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="Person" type="ocp:personType"/>
+    <element name="PersonIdentifier">
+        <complexType>
+            <simpleContent>
+                <extension base="ocp:String25">
+                    <attribute name="PersonIdentifierType" use="required">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="EmployeeNumber"/>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="PhoneNumber">
+        <complexType>
+            <simpleContent>
+                <extension base="ocp:String50">
+                    <attribute name="PhoneNumberType">
+                        <simpleType>
+                            <restriction base="string">
+                                <enumeration value="Primary"/>
+                                <enumeration value="Secondary"/>
+                                <enumeration value="Fax"/>
+                            </restriction>
+                        </simpleType>
+                    </attribute>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="PricingQualifier" type="string">
+        <annotation>
+            <documentation>Qualifier used for defining pricing</documentation>
+        </annotation>
+    </element>
+    <element name="ProductOrService">
+        <complexType>
+            <sequence>
+                <element name="ProductServiceCode" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <simpleContent>
+                            <extension base="ocp:String25">
+                                <attribute name="codeIndicator" use="optional">
+                                    <annotation>
+                                        <documentation>Valid indicators are AssignedByBuyer and AssignedBySeller</documentation>
+                                    </annotation>
+                                    <simpleType>
+                                        <restriction base="string">
+                                            <enumeration value="AssignedByBuyer"/>
+                                            <enumeration value="AssignedBySeller"/>
+                                        </restriction>
+                                    </simpleType>
+                                </attribute>
+                            </extension>
+                        </simpleContent>
+                    </complexType>
+                </element>
+                <element name="ProductServiceDescription" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String100"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:Categorization" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="RateOrPercentage" type="decimal"/>
+    <element name="PurchaseOrderNumber">
+        <simpleType>
+            <restriction base="ocp:String35"/>
+        </simpleType>
+    </element>
+    <element name="Quantity" type="decimal"/>
+    <element name="SelfAssessedTax" type="boolean"/>
+    <element name="ServiceDate" type="date"/>
+    <element name="Site">
+        <complexType>
+            <sequence>
+                <element name="SiteCode" minOccurs="0" maxOccurs="3">
+                    <complexType>
+                        <simpleContent>
+                            <extension base="string">
+                                <attribute name="SiteCodeType" use="required">
+                                    <simpleType>
+                                        <restriction base="string">
+                                            <enumeration value="AssignedByBuyer"/>
+                                            <enumeration value="AssignedBySeller"/>
+                                        </restriction>
+                                    </simpleType>
+                                </attribute>
+                            </extension>
+                        </simpleContent>
+                    </complexType>
+                </element>
+                <element name="SiteName">
+                    <simpleType>
+                        <restriction base="ocp:String50"/>
+                    </simpleType>
+                </element>
+                <element ref="ocp:Address" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="StockPoint">
+        <simpleType>
+            <restriction base="ocp:String50"/>
+        </simpleType>
+    </element>
+    <element name="SubCode">
+        <complexType>
+            <sequence>
+                <element ref="ocp:AccountNumber"/>
+                <element ref="ocp:Description" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="Tax">
+        <complexType>
+            <sequence>
+                <element ref="ocp:Total" minOccurs="0"/>
+                <element ref="ocp:RateOrPercentage" minOccurs="0"/>
+                <element name="TaxType">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+                <element name="TaxNumber" type="string" minOccurs="0"/>
+                <element name="ExemptCode" minOccurs="0">
+                    <simpleType>
+                        <restriction base="ocp:String25"/>
+                    </simpleType>
+                </element>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="Title">
+        <simpleType>
+            <restriction base="ocp:String50"/>
+        </simpleType>
+    </element>
+    <element name="Total" type="decimal"/>
+    <element name="TotalLineItems" type="integer"/>
+    <element name="TransmitMode">
+        <annotation>
+            <documentation>Denotes Test or Debug mode. If this tag is omitted, data transfers are assumed to be in production mode.</documentation>
+        </annotation>
+        <simpleType>
+            <restriction base="string">
+                <enumeration value="Test"/>
+                <enumeration value="Debug"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="Units">
+        <simpleType>
+            <restriction base="string">
+                <maxLength value="10"/>
+            </restriction>
+        </simpleType>
+    </element>
+    <element name="UnitPrice" type="decimal"/>
+    <element name="User">
+        <annotation>
+            <documentation>A user of the Oilfield Commerce Platform software</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="ocp:FirstName"/>
+                <element ref="ocp:Initial" minOccurs="0"/>
+                <element ref="ocp:LastName"/>
+                <element ref="ocp:Title" minOccurs="0"/>
+                <element ref="ocp:PhoneNumber" minOccurs="0" maxOccurs="3"/>
+                <element ref="ocp:PersonIdentifier"/>
+                <element ref="ocp:EmailAddress"/>
+                <element ref="ocp:DataEntityAction"/>
+                <element name="UserApprovalLevel" minOccurs="0" maxOccurs="unbounded">
+                    <complexType>
+                        <choice>
+                            <element ref="ocp:ApprovalLevelName"/>
+                            <element ref="ocp:AuthorizationDollarLimit"/>
+                        </choice>
+                        <attribute name="expenditureType" use="required">
+                            <simpleType>
+                                <restriction base="string"/>
+                            </simpleType>
+                        </attribute>
+                        <attribute name="CurrencyCode" use="optional">
+                            <simpleType>
+                                <restriction base="string"/>
+                            </simpleType>
+                        </attribute>
+                    </complexType>
+                </element>
+                <element name="ParentApprover" minOccurs="0">
+                    <complexType>
+                        <sequence>
+                            <element ref="ocp:PersonIdentifier"/>
+                        </sequence>
+                    </complexType>
+                </element>
+                <choice>
+                    <element ref="ocp:DelegateUser" minOccurs="0" maxOccurs="10"/>
+                    <element name="DeleteAllDelegates" type="boolean"/>
+                </choice>
+                <element name="Preferences" minOccurs="0" maxOccurs="2">
+                    <simpleType>
+                        <restriction base="string">
+                            <enumeration value="Field tickets are remitted to this user"/>
+                            <enumeration value="Notify on new OI documents"/>
+                        </restriction>
+                    </simpleType>
+                </element>
+                <element ref="ocp:Username" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="Username">
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <element name="WorkOrderNumber">
+        <simpleType>
+            <restriction base="ocp:String25"/>
+        </simpleType>
+    </element>
+    <element name="OrderedBy">
+        <simpleType>
+            <restriction base="ocp:String100"/>
+        </simpleType>
+    </element>
+    <complexType name="Restriction">
+        <sequence>
+            <element name="Allocation" maxOccurs="unbounded">
+                <complexType>
+                    <sequence>
+                        <element name="AllocationClass">
+                            <annotation>
+                                <documentation>valid values are PurchaseOrder</documentation>
+                            </annotation>
+                            <simpleType>
+                                <restriction base="string">
+                                    <enumeration value="PurchaseOrder"/>
+                                    <enumeration value="AFE"/>
+                                    <enumeration value="CostCenter"/>
+                                </restriction>
+                            </simpleType>
+                        </element>
+                        <element name="Constraint">
+                            <simpleType>
+                                <restriction base="string">
+                                    <enumeration value="Required"/>
+                                    <enumeration value="NotRequired"/>
+                                    <enumeration value="RequiredWithNoCostObject"/>
+                                </restriction>
+                            </simpleType>
+                        </element>
+                        <element name="AllocationCode" type="string" minOccurs="0">
+                            <annotation>
+                                <documentation>example: purchaseOrder Number</documentation>
+                            </annotation>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+    <attribute name="ocpId" type="integer">
+        <annotation>
+            <documentation>The primary key id of a data entity in the Oilfield Commerce Platform</documentation>
+        </annotation>
+    </attribute>
+</schema>

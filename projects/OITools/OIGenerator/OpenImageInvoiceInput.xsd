@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 rel. 3 U (http://www.altova.com) by Darren Wu (Digital Oilfield Inc.) -->
+<!-- edited with XML Spy v4.4 U (http://www.xmlspy.com) by Karen Patton (Digital Oilfield Inc) -->
+<!--This document and it's contents are proprietary and confidential to Digital Oilfield Inc.
+Unauthorized use, distribution,  or modifications without Digital Oilfield Inc. prior consent is prohibited-->
+<schema xmlns:ocp="http://www.digitaloilfield.com/ocp" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.digitaloilfield.com/ocp" elementFormDefault="qualified" version="1.2">
+	<include schemaLocation="ocpLibrary.xsd"/>
+	<element name="OpenImageInvoice">
+		<complexType>
+			<sequence>
+				<element name="InvoiceHeader">
+					<complexType>
+						<sequence>
+							<element name="InvoiceNumber" type="string"/>
+							<element name="Partner" minOccurs="2" maxOccurs="2">
+								<complexType>
+									<sequence>
+										<element name="Company">
+											<complexType>
+												<sequence>
+													<element name="CompanyCode" maxOccurs="unbounded">
+														<complexType>
+															<simpleContent>
+																<extension base="string">
+																	<attribute name="CompanyCodeType" use="required">
+																		<simpleType>
+																			<restriction base="string">
+																				<enumeration value="DUNSnumber"/>
+																				<enumeration value="VendorNumber"/>
+																				<enumeration value="CustomerNumber"/>
+																				<enumeration value="DUNS+4"/>
+																				<enumeration value="TaxNumber"/>
+																				<enumeration value="PhoneNumber"/>
+																				<enumeration value="DepartmentCode"/>
+																			</restriction>
+																		</simpleType>
+																	</attribute>
+																</extension>
+															</simpleContent>
+														</complexType>
+													</element>
+													<element ref="ocp:CompanyName" minOccurs="0"/>
+												</sequence>
+											</complexType>
+										</element>
+										<element name="Site" minOccurs="0">
+											<complexType>
+												<sequence>
+													<element name="SiteCode" minOccurs="0" maxOccurs="3">
+														<complexType>
+															<simpleContent>
+																<extension base="string">
+																	<attribute name="SiteCodeType" use="required">
+																		<simpleType>
+																			<restriction base="string">
+																				<enumeration value="AssignedByBuyer"/>
+																				<enumeration value="AssignedBySeller"/>
+																			</restriction>
+																		</simpleType>
+																	</attribute>
+																</extension>
+															</simpleContent>
+														</complexType>
+													</element>
+													<element name="SiteName" minOccurs="0">
+														<simpleType>
+															<restriction base="ocp:String50"/>
+														</simpleType>
+													</element>
+													<element ref="ocp:Address" minOccurs="0" maxOccurs="unbounded"/>
+												</sequence>
+											</complexType>
+										</element>
+										<element ref="ocp:Person" minOccurs="0"/>
+										<element ref="ocp:DepartmentOrGroup" minOccurs="0"/>
+									</sequence>
+									<attribute name="PartnerType">
+										<simpleType>
+											<restriction base="string">
+												<enumeration value="Supplier"/>
+												<enumeration value="Buyer"/>
+												<enumeration value="B2BDocumentSender"/>
+												<enumeration value="B2BDocumentReceiver"/>
+											</restriction>
+										</simpleType>
+									</attribute>
+								</complexType>
+							</element>
+							<element name="InvoiceDate" type="date"/>
+							<element name="InvoiceType" minOccurs="0">
+								<simpleType>
+									<restriction base="string">
+										<maxLength value="25"/>
+									</restriction>
+								</simpleType>
+							</element>
+							<element ref="ocp:Total"/>
+							<element ref="ocp:Tax" minOccurs="0" maxOccurs="unbounded"/>
+							<element ref="ocp:CurrencyCode" minOccurs="0"/>
+							<element ref="ocp:LongDescription" minOccurs="0"/>
+							<element ref="ocp:ServiceDate" minOccurs="0"/>
+							<element ref="ocp:OrderedBy" minOccurs="0"/>
+							<element ref="ocp:AdditionalData" minOccurs="0" maxOccurs="unbounded"/>
+						</sequence>
+					</complexType>
+				</element>
+				<element name="AttachmentReference">
+					<complexType>
+						<simpleContent>
+							<extension base="string">
+								<attribute name="href" type="anyURI" use="required"/>
+							</extension>
+						</simpleContent>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
