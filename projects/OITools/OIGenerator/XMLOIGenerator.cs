@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -68,6 +69,18 @@ namespace OIGenerator
             return File.ReadAllBytes(filename);
         }
 
+        public HttpClient getWebClient(string OIPayload)
+        {
+            X509Certificate2 clientCert = GetMyCert();
+            HttpClientHandler handler = new HttpClientHandler();
+            handler.ClientCertificates.Add(clientCert);
+
+            HttpClient client = new HttpClient();
+
+            return client;
+
+        }
+
         /* Build the 
          * 
          */
@@ -102,6 +115,32 @@ namespace OIGenerator
             return message;
         }
 
+        private X509Certificate2 GetMyCert()
+        {
+            string certThumbprint = "...";
+            string certSubjectName = "....";
+            X509Certificate2 cert = null;
+
+            // Load the certificate
+            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly);
+            X509Certificate2Collection certCollection = store.Certificates.Find
+            (
+                X509FindType.FindBySubjectName, certSubjectName, true
+                /*
+                X509FindType.FindByThumbprint,
+                certThumbprint,
+                false    // Including invalid certificates
+                */
+            );
+            if (certCollection.Count > 0)
+            {
+                cert = certCollection[0];
+            }
+            store.Close();
+
+            return cert;
+        }
 
         /* Generate the SoapPayload according to the SOAP specifications
          * Put the Open Invoice payload in the SOAP body
