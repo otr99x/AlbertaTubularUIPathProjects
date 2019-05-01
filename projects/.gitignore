@@ -42,6 +42,7 @@ _ReSharper*/
 *.resharper.user
 [Nn][Dd]epend[Oo]ut*/
 Ankh.NoLoad
+storage.ide
 
 #Other
 .svn
