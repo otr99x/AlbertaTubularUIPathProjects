@@ -25,7 +25,7 @@ namespace MyApplication
             string invoiceXML = generator.getXMLFromJSON(jsonData);
             Console.WriteLine(invoiceXML);
             Console.WriteLine("----------------------------------");
-            string soapPayload = generator.getSoapPayload(invoiceXML);
+            string soapPayload = generator.getSoapPayload2(invoiceXML);
             Console.WriteLine(soapPayload);
             Console.WriteLine(generator.getFileString64(@"c:\test.pdf"));
             /*

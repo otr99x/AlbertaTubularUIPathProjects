@@ -142,6 +142,53 @@ namespace OIGenerator
             return cert;
         }
 
+        public string getSoapPayload2(string OIPayload)
+        {
+            XmlDocument payloadDoc = new XmlDocument();
+            payloadDoc.LoadXml(OIPayload);
+            
+            //create the soap envelopoe
+            Envelope soapEnvelope = new Envelope();
+            Header soapHeader = new Header();
+            soapEnvelope.Header = soapHeader;
+            Body soapBody = new Body();
+            soapEnvelope.Body = soapBody;
+
+            //load the body:
+
+            XmlDocument document = new XmlDocument();
+            soapBody.Any = new XmlElement[1];
+            document.LoadXml("<DOHeaderSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOHeaderSOAP>");
+            soapBody.Any[0] = document.DocumentElement;
+
+            
+            //load the header
+
+            string clientDunns = "ClientDunnsNumber";
+            string trackingIdentifier = "some unique identifier";
+            XElement payloadElement = XElement.Parse(OIPayload);
+            XNamespace ns = string.Empty;
+            XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
+            XElement element = new XElement(defaultns + "DoHeaderSoap",
+               new XElement(defaultns + "DeliveryInformation",
+                            new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
+                            new XElement(defaultns + "TrackingIdentifier", trackingIdentifier),
+                            new XElement(defaultns + "ReceiverIdentifier", "20010337", new XAttribute("identifierType", "DUNSNumber")),
+                            new XElement(defaultns + "SenderIdentifier", clientDunns, new XAttribute("identifierType", "DUNSNumber"))));
+
+            document.LoadXml(element.ToString());
+            soapHeader.Any = new XmlElement[1];
+            soapHeader.Any[0] = document.DocumentElement;
+
+            
+
+            XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
+            StringWriter writer = new StringWriter();
+            serializer.Serialize(writer, soapEnvelope);
+            return writer.ToString();
+
+        }
+
         /* Generate the SoapPayload according to the SOAP specifications
          * Put the Open Invoice payload in the SOAP body
          * 

@@ -43,9 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeliveryInformation.cs">
+      <DependentUpon>DeliveryInformation.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Invoice.cs" />
     <Compile Include="OpenImageInvoiceInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="soap11envelope.cs">
+      <DependentUpon>soap11envelope.xsd</DependentUpon>
+    </Compile>
     <Compile Include="XMLOIGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

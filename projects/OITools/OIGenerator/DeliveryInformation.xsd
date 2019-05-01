@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 (http://www.altova.com) by Karen Robinson (Digital Oilfield Inc.) -->
+<!--This document and it's contents are proprietary and confidential to Digital Oilfield Inc.
+Unauthorized use, distribution,  or modifications without Digital Oilfield Inc. prior consent is prohibited-->
+<xs:schema xmlns:ocp="http://www.digitaloilfield.com/ocp" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.digitaloilfield.com/ocp" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.1">
+	<xs:annotation>
+		<xs:documentation>
+			Schema Name:	DeliveryInformation
+			Copyright:	ADP Inc. 2011		
+			Schema Version Number: 	2.1
+			Version Date:	 2011-June-20
+			Application:		OpenInvoice, DCR
+            Usage Note:	External
+		</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>The common response document to the import process</xs:documentation>
+	</xs:annotation>
+	<xs:element name="DeliveryInformation">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentType" type="ocp:deliveryInfoDocType"/>
+				<xs:element name="DateTime" type="xs:dateTime" minOccurs="0"/>
+				<xs:element name="TrackingIdentifier" minOccurs="0" maxOccurs="2">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="indicator">
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="messageId"/>
+											<xs:enumeration value="correlationId"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ReceiverIdentifier" type="ocp:tradingPartnerIdType"/>
+				<xs:element name="SenderIdentifier" type="ocp:tradingPartnerIdType"/>
+				<xs:element name="NumberOfAttachments" type="xs:integer" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="deliveryInfoDocType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IMAGEINVOICE"/>
+			<xs:enumeration value="DOCUMENTSTATUSUPDATE"/>
+			<xs:enumeration value="UAPINVOICE"/>
+			<xs:enumeration value="INVOICE"/>
+			<xs:enumeration value="INVOICERESPONSE"/>
+			<xs:enumeration value="FIELDTICKET"/>
+			<xs:enumeration value="FIELDTICKETRESPONSE"/>
+			<xs:enumeration value="PURCHASEORDER"/>
+			<xs:enumeration value="PURCHASEORDERRESPONSE"/>
+			<xs:enumeration value="PROJECT"/>
+			<xs:enumeration value="COSTCOLLECTION"/>
+			<xs:enumeration value="AFE"/>
+			<xs:enumeration value="CC"/>
+			<xs:enumeration value="DORESPONSE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="tradingPartnerIdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="identifierType" use="required" fixed="DUNSNumber">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="DUNSNumber"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>
