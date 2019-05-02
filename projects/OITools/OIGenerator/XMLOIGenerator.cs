@@ -82,21 +82,13 @@ namespace OIGenerator
 
         private X509Certificate2 GetMyCert()
         {
-            //string certThumbprint = "...";
-            string certSubjectName = "....";
             X509Certificate2 cert = null;
 
-            // Load the certificate
             var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadOnly);
             X509Certificate2Collection certCollection = store.Certificates.Find
             (
-                X509FindType.FindBySubjectName, certSubjectName, true
-            /*
-            X509FindType.FindByThumbprint,
-            certThumbprint,
-            false    // Including invalid certificates
-            */
+                X509FindType.FindBySerialNumber, "1fd9", true
             );
             if (certCollection.Count > 0)
             {
@@ -185,7 +177,8 @@ namespace OIGenerator
             // additional headers
 
             // now add the multipart content
-            MultipartContent multicontent = new MultipartContent("text/xml", "MIME-BOUNDARY");
+            //MultipartContent multicontent = new MultipartContent("text/xml", "MIME-BOUNDARY");
+            MultipartContent multicontent = new MultipartContent("MIME-BOUNDARY");
             message.Content = multicontent;
 
             string soapPayload = mSoapPayload;
