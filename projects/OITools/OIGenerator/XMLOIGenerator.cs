@@ -168,6 +168,35 @@ namespace OIGenerator
 
         }
 
+        public void setSoapPayload2()
+        {
+            string clientDunns = mSupplierDunns;
+            string trackingIdentifier = mUniqueTrackingIdentifier;
+            XElement payloadElement = XElement.Parse(mOIPayload);
+            XNamespace ns = string.Empty;
+            XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
+            XNamespace ns2 = "http://schemas.xmlsoap.org/soap/envelope/";
+            XNamespace ns3 = "http://schemas.xmlsoap.org/soap/encoding/";
+            XNamespace ns4 = "http://www.w3.org/1999/XMLSchema";
+            XNamespace ns5 = "http://www.w3.org/1999/XMLSchema-instance";
+            XNamespace ns6 = "http://schemas.xmlsoap.org/soap/encoding/";
+
+            XElement element = new XElement(ns2 + "Envelope", new XAttribute(XNamespace.Xmlns + "SOAP-ENV", ns2), new XAttribute(XNamespace.Xmlns + "SOAP-ENC", ns3), new XAttribute(XNamespace.Xmlns + "xsd", ns4), new XAttribute(XNamespace.Xmlns + "xsi", ns5), new XAttribute(XNamespace.Xmlns + "encodingStyle", ns6),
+                new XElement(ns2 + "Header",
+                    new XElement(defaultns + "DoHeaderSOAP",
+                        new XElement(defaultns + "DeliveryInformation",
+                            new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
+                            new XElement(defaultns + "TrackingIdentifier", trackingIdentifier),
+                            new XElement(defaultns + "ReceiverIdentifier", "20010337", new XAttribute("identifierType", "DUNSNumber")),
+                            new XElement(defaultns + "SenderIdentifier", clientDunns, new XAttribute("identifierType", "DUNSNumber"))))),
+                new XElement(ns2 + "Body",
+                    new XElement(defaultns + "DOReceiveSOAP",
+                        payloadElement)));
+
+            mSoapPayload = element.ToString();
+
+        }
+
         private void setHttpRequest()
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri("http://google.com"));
@@ -275,34 +304,6 @@ namespace OIGenerator
 
         }
         
-        public string getSoapPayload(string OIPayload)
-        {
-            string clientDunns = "ClientDunnsNumber";
-            string trackingIdentifier = "some unique identifier";
-            XElement payloadElement = XElement.Parse(OIPayload);
-            XNamespace ns = string.Empty;
-            XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
-            XNamespace ns2 = "http://schemas.xmlsoap.org/soap/envelope/";
-            XNamespace ns3 = "http://schemas.xmlsoap.org/soap/encoding/";
-            XNamespace ns4 = "http://www.w3.org/1999/XMLSchema";
-            XNamespace ns5 = "http://www.w3.org/1999/XMLSchema-instance";
-            XNamespace ns6 = "http://schemas.xmlsoap.org/soap/encoding/";
-
-            XElement element = new XElement(ns2 + "Envelope", new XAttribute(XNamespace.Xmlns + "SOAP-ENV", ns2), new XAttribute(XNamespace.Xmlns + "SOAP-ENC", ns3), new XAttribute(XNamespace.Xmlns + "xsd", ns4), new XAttribute(XNamespace.Xmlns + "xsi", ns5), new XAttribute(XNamespace.Xmlns + "encodingStyle", ns6),
-                new XElement(ns2 + "Header",
-                    new XElement(defaultns + "DoHeaderSOAP",
-                        new XElement(defaultns + "DeliveryInformation",
-                            new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
-                            new XElement(defaultns + "TrackingIdentifier", trackingIdentifier),
-                            new XElement(defaultns + "ReceiverIdentifier", "20010337", new XAttribute("identifierType", "DUNSNumber")),
-                            new XElement(defaultns + "SenderIdentifier", clientDunns, new XAttribute("identifierType", "DUNSNumber"))))),
-                new XElement(ns2 + "Body",
-                    new XElement(defaultns + "DOReceiveSOAP",
-                        payloadElement)));
-
-            return element.ToString();
-
-        }
         */
 
     }
