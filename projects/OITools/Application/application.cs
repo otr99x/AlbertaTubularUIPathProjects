@@ -20,6 +20,13 @@ namespace MyApplication
             invoiceObj.companyName = "Diversified";
             invoiceObj.invoiceNumber = "1234";
 
+            generator.generateRequest("supplier_dunns", @"c:\test.pdf", invoiceObj);
+            Console.WriteLine("-------------OI Payload---------------");
+            Console.WriteLine(generator.getOIPayload());
+            Console.WriteLine("-------------Soap Payload---------------");
+            Console.WriteLine(generator.getSoapPayload());
+
+            /*
             JavaScriptSerializer js = new JavaScriptSerializer();
             string jsonData = js.Serialize(invoiceObj);
             string invoiceXML = generator.getXMLFromJSON(jsonData);
@@ -28,12 +35,11 @@ namespace MyApplication
             string soapPayload = generator.getSoapPayload2(invoiceXML);
             Console.WriteLine(soapPayload);
             Console.WriteLine(generator.getFileString64(@"c:\test.pdf"));
-            /*
             Console.WriteLine(generator.hashData("Some Key", "This is the data to encrypt"));
             XElement element = XElement.Parse("<OpenImageInvoice></OpenImageInvoice>");
             Console.WriteLine(element.ToString());
             Console.WriteLine(generator.getSoapPayload("<OpenImageInvoice></OpenImageInvoice>"));
             */
         }
-   }
+    }
 }
