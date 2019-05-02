@@ -229,6 +229,28 @@ namespace OIGenerator
 
             mHttpRequestMessage = message;
         }
+
+        public string send()
+        {
+            var response = string.Empty;
+            var t = Task.Run(() => sendRequest());
+            t.Wait();
+            response = t.Result;
+            return response;
+        }
+        private async Task<string> sendRequest()
+        {
+            var response = string.Empty;
+            using (mHttpClient)
+            {
+                HttpResponseMessage result = await mHttpClient.SendAsync(mHttpRequestMessage);
+                if (result.IsSuccessStatusCode)
+                {
+                    response = result.StatusCode.ToString();
+                }
+            }
+            return response;
+        }
         /*
         public string hashData(string key, string message)
         {

@@ -25,6 +25,7 @@ namespace MyApplication
             Console.WriteLine(generator.getOIPayload());
             Console.WriteLine("-------------Soap Payload---------------");
             Console.WriteLine(generator.getSoapPayload());
+            //generator.send();
 
             /*
             JavaScriptSerializer js = new JavaScriptSerializer();
