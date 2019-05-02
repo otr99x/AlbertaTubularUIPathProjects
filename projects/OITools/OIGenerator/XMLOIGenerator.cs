@@ -23,11 +23,13 @@ namespace OIGenerator
         private HttpRequestMessage mHttpRequestMessage;
         private string mSoapPayload;
         private string mUniqueTrackingIdentifier;
+        private string mEndPointURL;
 
-        public XMLOIGenerator()
+        public XMLOIGenerator(string supplierDunns, string endpoint)
         {
             mHttpClient = getWebClient();
-            mSupplierDunns = "0000";
+            mEndPointURL = endpoint;
+            mSupplierDunns = supplierDunns;
             mOIPayload = null;
             mAttachment = null;
             mHttpRequestMessage = null;
@@ -199,7 +201,7 @@ namespace OIGenerator
 
         private void setHttpRequest()
         {
-            var message = new HttpRequestMessage(HttpMethod.Post, new Uri("http://google.com"));
+            var message = new HttpRequestMessage(HttpMethod.Post, new Uri(mEndPointURL));
             // set the basic authorization ----- Not needed
             //byte[] credentials = Encoding.UTF8.GetBytes("username:password1234");
             //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));

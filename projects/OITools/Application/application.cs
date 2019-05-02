@@ -14,7 +14,7 @@ namespace MyApplication
         static void Main(string[] args)
         {
             Console.WriteLine("about to start the application");
-            XMLOIGenerator generator = new XMLOIGenerator();
+            XMLOIGenerator generator = new XMLOIGenerator("SupplierDunns", @"https://google.ca/api/getdata");
 
             Invoice invoiceObj = new Invoice();
             invoiceObj.companyName = "Diversified";
