@@ -25,6 +25,8 @@ namespace MyApplication
             Console.WriteLine(generator.getOIPayload());
             Console.WriteLine("-------------Soap Payload---------------");
             Console.WriteLine(generator.getSoapPayload());
+            Console.WriteLine("-------------Request Content Payload---------------");
+            Console.WriteLine(generator.getRequestContent());
             //generator.send();
 
             /*

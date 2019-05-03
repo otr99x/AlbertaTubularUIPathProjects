@@ -47,6 +47,15 @@ namespace OIGenerator
             return mOIPayload;
         }
 
+        public string getRequestContent()
+        {
+            var response = string.Empty;
+            var t = Task.Run(() => mHttpRequestMessage.Content.ReadAsStringAsync());
+            t.Wait();
+            response = t.Result;
+            return response;
+        }
+
         public void generateRequest(string supplierDunns, string attachmentFilePath, Invoice invoiceObj)
         {
             setOIPayloadFromInvoiceObject(invoiceObj);
