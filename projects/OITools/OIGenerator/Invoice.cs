@@ -8,7 +8,10 @@ namespace OIGenerator
 {
     public class Invoice
     {
-        public string invoiceNumber { get; set; }
         public string companyName { get; set; }
+        public string invoiceNumber { get; set; }
+        public string invoiceDate { get; set; }
+        public string gstTotal { get; set; }
+        public string invoiceTotal { get; set; }
     }
 }

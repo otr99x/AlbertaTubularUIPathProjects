@@ -28,8 +28,8 @@ namespace OIGenerator
         public XMLOIGenerator(string supplierDunns, string endpoint)
         {
             mHttpClient = getWebClient();
-            mEndPointURL = endpoint;
             mSupplierDunns = supplierDunns;
+            mEndPointURL = endpoint;
             mOIPayload = null;
             mAttachment = null;
             mHttpRequestMessage = null;
@@ -76,7 +76,7 @@ namespace OIGenerator
 
         private string getUniqueIdentifier()
         {
-            return "UNIQ";
+            return DateTime.Now.ToString("yyyyMMddHHmmss");
         }
 
         private HttpClient getWebClient()
@@ -122,9 +122,23 @@ namespace OIGenerator
             XmlSerializer serializer = new XmlSerializer(typeof(OpenImageInvoice));
             OpenImageInvoice invoice = new OpenImageInvoice();
             OpenImageInvoiceInvoiceHeader header = new OpenImageInvoiceInvoiceHeader();
+
+            header.InvoiceType = "Original Invoice";
             header.InvoiceNumber = invoiceObj.invoiceNumber;
+            header.InvoiceDate = Convert.ToDateTime(invoiceObj.invoiceDate);
+            header.Total = Convert.ToDecimal(invoiceObj.invoiceTotal);
+
+            header.Tax = new Tax[1];
+            header.Tax[0] = new Tax();
+            header.Tax[0].TotalSpecified = true;
+            header.Tax[0].Total = Convert.ToDecimal(invoiceObj.gstTotal);
+            header.Tax[0].TaxType = "GST";
+
+            header.CurrencyCode = "CAD";
             header.LongDescription = invoiceObj.companyName;
+
             invoice.InvoiceHeader = header;
+
             StringWriter writer = new StringWriter();
             serializer.Serialize(writer, invoice);
             mOIPayload = writer.ToString();
@@ -132,7 +146,11 @@ namespace OIGenerator
 
         private void setFileByteArray(string filename)
         {
-            mAttachment = File.ReadAllBytes(filename);
+            mAttachment = Encoding.UTF8.GetBytes(Convert.ToBase64String(File.ReadAllBytes(filename)));
+
+            //mAttachment = File.ReadAllBytes(filename);
+            //string mAttachmentStr =  Convert.ToBase64String(mAttachment);
+            //mAttachment = Encoding.UTF8.GetBytes(mAttachmentStr);
         }
 
         private void setSoapPayload()

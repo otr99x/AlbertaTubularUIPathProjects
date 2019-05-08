@@ -13,14 +13,20 @@ namespace MyApplication
     {
         static void Main(string[] args)
         {
+            string supplierDUNS = "247021421";
+
             Console.WriteLine("about to start the application");
-            XMLOIGenerator generator = new XMLOIGenerator("SupplierDunns", @"https://google.ca/api/getdata");
 
             Invoice invoiceObj = new Invoice();
-            invoiceObj.companyName = "Diversified";
-            invoiceObj.invoiceNumber = "1234";
+            invoiceObj.companyName = "Ryan's Coffee Services Ltd";
+            invoiceObj.invoiceNumber = "B42475";
+            invoiceObj.invoiceDate = "2019-04-08";
+            invoiceObj.gstTotal = "2.78";
+            invoiceObj.invoiceTotal = "84.78";
 
-            generator.generateRequest("supplier_dunns", @"c:\test.pdf", invoiceObj);
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, @"https://google.ca/api/getdata");
+
+            generator.generateRequest(supplierDUNS, @"E:\Data\UiPath\AlbertaTubular\Attachments\Ryan\Inv_B42475_from_Ryans_Coffee_Service_Ltd._8584.pdf", invoiceObj);
             Console.WriteLine("-------------OI Payload---------------");
             Console.WriteLine(generator.getOIPayload());
             Console.WriteLine("-------------Soap Payload---------------");
