@@ -14,19 +14,24 @@ namespace MyApplication
         static void Main(string[] args)
         {
             string supplierDUNS = "247021421";
+            string supplierDept = "Accounts Payable";
 
             Console.WriteLine("about to start the application");
 
             Invoice invoiceObj = new Invoice();
+            invoiceObj.companyCode = "RYAN";
             invoiceObj.companyName = "Ryan's Coffee Services Ltd";
             invoiceObj.invoiceNumber = "B42475";
             invoiceObj.invoiceDate = "2019-04-08";
+            invoiceObj.invoiceType = "Original Invoice";
+            invoiceObj.taxType = "GST";
             invoiceObj.gstTotal = "2.78";
             invoiceObj.invoiceTotal = "84.78";
+            invoiceObj.currencyCode = "CAD";
 
-            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, @"https://google.ca/api/getdata");
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://google.ca/api/getdata");
 
-            generator.generateRequest(supplierDUNS, @"E:\Data\UiPath\AlbertaTubular\Attachments\Ryan\Inv_B42475_from_Ryans_Coffee_Service_Ltd._8584.pdf", invoiceObj);
+            generator.generateRequest(supplierDUNS, supplierDept, @"E:\Data\UiPath\AlbertaTubular\Attachments\Ryan\RyanLogo.pdf", invoiceObj);
             Console.WriteLine("-------------OI Payload---------------");
             Console.WriteLine(generator.getOIPayload());
             Console.WriteLine("-------------Soap Payload---------------");

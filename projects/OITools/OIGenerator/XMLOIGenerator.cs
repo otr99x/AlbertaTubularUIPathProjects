@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -17,6 +18,8 @@ namespace OIGenerator
     public class XMLOIGenerator
     {
         private string mSupplierDunns;
+        private string mSupplierDept;
+        private string mAttachmentFilePath;
         private HttpClient mHttpClient;
         private string mOIPayload;
         private byte[] mAttachment;
@@ -25,12 +28,14 @@ namespace OIGenerator
         private string mUniqueTrackingIdentifier;
         private string mEndPointURL;
 
-        public XMLOIGenerator(string supplierDunns, string endpoint)
+        public XMLOIGenerator(string supplierDunns, string supplierDept, string endpoint)
         {
             mHttpClient = getWebClient();
             mSupplierDunns = supplierDunns;
+            mSupplierDept = supplierDept;
             mEndPointURL = endpoint;
             mOIPayload = null;
+            mAttachmentFilePath = null;
             mAttachment = null;
             mHttpRequestMessage = null;
             mSoapPayload = null;
@@ -56,19 +61,22 @@ namespace OIGenerator
             return response;
         }
 
-        public void generateRequest(string supplierDunns, string attachmentFilePath, Invoice invoiceObj)
+        public void generateRequest(string supplierDunns, string supplierDept, string attachmentFilePath, Invoice invoiceObj)
         {
             setOIPayloadFromInvoiceObject(invoiceObj);
             mSupplierDunns = supplierDunns;
-            setFileByteArray(attachmentFilePath);
+            mSupplierDept = supplierDept;
+            mAttachmentFilePath = attachmentFilePath;
+            setFileByteArray(mAttachmentFilePath);
             setSoapPayload();
             setHttpRequest();
         }
 
-        public void generateRequest(string supplierDunns, string attachmentFilePath, string jsonData)
+        public void generateRequest(string supplierDunns, string supplierDept, string attachmentFilePath, string jsonData)
         {
             setOIPayloadFromJSON(jsonData);
             mSupplierDunns = supplierDunns;
+            mSupplierDept = supplierDept;
             setFileByteArray(attachmentFilePath);
             setSoapPayload();
             setHttpRequest();
@@ -123,21 +131,54 @@ namespace OIGenerator
             OpenImageInvoice invoice = new OpenImageInvoice();
             OpenImageInvoiceInvoiceHeader header = new OpenImageInvoiceInvoiceHeader();
 
-            header.InvoiceType = "Original Invoice";
             header.InvoiceNumber = invoiceObj.invoiceNumber;
+
+            header.Partner = new OpenImageInvoiceInvoiceHeaderPartner[2];
+
+            // Buyer Company
+            header.Partner[0] = new OpenImageInvoiceInvoiceHeaderPartner();
+            header.Partner[0].PartnerTypeSpecified = true;
+            header.Partner[0].PartnerType = OpenImageInvoiceInvoiceHeaderPartnerPartnerType.Buyer;
+            header.Partner[0].Company = new OpenImageInvoiceInvoiceHeaderPartnerCompany();
+            header.Partner[0].Company.CompanyCode = new OpenImageInvoiceInvoiceHeaderPartnerCompanyCompanyCode[1];
+            header.Partner[0].Company.CompanyCode[0] = new OpenImageInvoiceInvoiceHeaderPartnerCompanyCompanyCode();
+            header.Partner[0].Company.CompanyCode[0].CompanyCodeType = OpenImageInvoiceInvoiceHeaderPartnerCompanyCompanyCodeCompanyCodeType.DUNSnumber;
+            header.Partner[0].Company.CompanyCode[0].Value = mSupplierDunns;
+            header.Partner[0].DepartmentOrGroup = new departmentOrGroupType();
+            header.Partner[0].DepartmentOrGroup.DepartmentCode = mSupplierDept;
+
+            // Supplier Company
+            header.Partner[1] = new OpenImageInvoiceInvoiceHeaderPartner();
+            header.Partner[1].PartnerTypeSpecified = true;
+            header.Partner[1].PartnerType = OpenImageInvoiceInvoiceHeaderPartnerPartnerType.Supplier;
+            header.Partner[1].Company = new OpenImageInvoiceInvoiceHeaderPartnerCompany();
+            header.Partner[1].Company.CompanyCode = new OpenImageInvoiceInvoiceHeaderPartnerCompanyCompanyCode[1];
+            header.Partner[1].Company.CompanyCode[0] = new OpenImageInvoiceInvoiceHeaderPartnerCompanyCompanyCode();
+            header.Partner[1].Company.CompanyCode[0].CompanyCodeType = OpenImageInvoiceInvoiceHeaderPartnerCompanyCompanyCodeCompanyCodeType.VendorNumber;
+            header.Partner[1].Company.CompanyCode[0].Value = invoiceObj.companyCode;
+            header.Partner[1].Company.CompanyName = invoiceObj.companyName;
+
+            // Invoice Fields
             header.InvoiceDate = Convert.ToDateTime(invoiceObj.invoiceDate);
+            header.InvoiceType = invoiceObj.invoiceType;
             header.Total = Convert.ToDecimal(invoiceObj.invoiceTotal);
 
+            // Tax Fields
             header.Tax = new Tax[1];
             header.Tax[0] = new Tax();
             header.Tax[0].TotalSpecified = true;
             header.Tax[0].Total = Convert.ToDecimal(invoiceObj.gstTotal);
-            header.Tax[0].TaxType = "GST";
+            header.Tax[0].TaxType = invoiceObj.taxType;
 
-            header.CurrencyCode = "CAD";
-            header.LongDescription = invoiceObj.companyName;
+            // Currency
+            header.CurrencyCode = invoiceObj.currencyCode;
 
             invoice.InvoiceHeader = header;
+
+            // Attachment Reference
+            invoice.AttachmentReference = new OpenImageInvoiceAttachmentReference();
+            invoice.AttachmentReference.href = "cid:openImageAttachment" + mUniqueTrackingIdentifier;
+            invoice.AttachmentReference.Value = mUniqueTrackingIdentifier;
 
             StringWriter writer = new StringWriter();
             serializer.Serialize(writer, invoice);
@@ -169,7 +210,7 @@ namespace OIGenerator
 
             XmlDocument document = new XmlDocument();
             soapBody.Any = new XmlElement[1];
-            document.LoadXml("<DOHeaderSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOHeaderSOAP>");
+            document.LoadXml("<DOReceiveSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOReceiveSOAP>");
             soapBody.Any[0] = document.DocumentElement;
 
 
@@ -181,7 +222,7 @@ namespace OIGenerator
                new XElement(defaultns + "DeliveryInformation",
                             new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
                             new XElement(defaultns + "TrackingIdentifier", mUniqueTrackingIdentifier),
-                            new XElement(defaultns + "ReceiverIdentifier", "20010337", new XAttribute("identifierType", "DUNSNumber")),
+                            new XElement(defaultns + "ReceiverIdentifier", "200103377", new XAttribute("identifierType", "DUNSNumber")),
                             new XElement(defaultns + "SenderIdentifier", mSupplierDunns, new XAttribute("identifierType", "DUNSNumber"))));
 
             document.LoadXml(element.ToString());
@@ -216,7 +257,7 @@ namespace OIGenerator
                         new XElement(defaultns + "DeliveryInformation",
                             new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
                             new XElement(defaultns + "TrackingIdentifier", trackingIdentifier),
-                            new XElement(defaultns + "ReceiverIdentifier", "20010337", new XAttribute("identifierType", "DUNSNumber")),
+                            new XElement(defaultns + "ReceiverIdentifier", "200103377", new XAttribute("identifierType", "DUNSNumber")),
                             new XElement(defaultns + "SenderIdentifier", clientDunns, new XAttribute("identifierType", "DUNSNumber"))))),
                 new XElement(ns2 + "Body",
                     new XElement(defaultns + "DOReceiveSOAP",
@@ -235,16 +276,31 @@ namespace OIGenerator
             // additional headers
 
             // now add the multipart content
-            //MultipartContent multicontent = new MultipartContent("text/xml", "MIME-BOUNDARY");
-            MultipartContent multicontent = new MultipartContent("MIME-BOUNDARY");
+            MultipartContent multicontent = new MultipartContent("Related", "MIME-BOUNDARY");
             message.Content = multicontent;
+
+            //multicontent.Headers.Remove("Content-Type");
+            //multicontent.Headers.TryAddWithoutValidation("Content-Type", "multipart/Related; boundary=MIME-BOUNDARY; type=text/xml");
 
             string soapPayload = mSoapPayload;
             HttpContent soapContent = new StringContent(soapPayload, Encoding.UTF8, "text/xml");
+            soapContent.Headers.Add("Content-Id", "<BodyPart>");
             multicontent.Add(soapContent);
+
             byte[] attachmentPayload = mAttachment;
             HttpContent attachmentContent = new ByteArrayContent(attachmentPayload);
+            attachmentContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline")
+            {
+                FileName = mAttachmentFilePath
+            };
+
+            attachmentContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            attachmentContent.Headers.ContentType.Parameters.Add(new NameValueHeaderValue("name", "\"" + mAttachmentFilePath + "\""));
+            attachmentContent.Headers.Add("Content-Transfer-Encoding", "base64");
+            attachmentContent.Headers.Add("Content-Id", "<cid: openImageAttachment" + mUniqueTrackingIdentifier + ">");
+
             multicontent.Add(attachmentContent);
+
             // now get the hash of the entire stream --- Not needed
             //Task<Stream> task = multicontent.ReadAsStreamAsync();
             //task.Wait();

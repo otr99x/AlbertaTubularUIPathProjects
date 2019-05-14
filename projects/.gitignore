@@ -3,7 +3,6 @@
 [Tt]humbs.db
 
 #Visual Studio Files
-.vs/
 [Oo]bj
 [Bb]in
 [Dd]ebug
@@ -43,7 +42,7 @@ _ReSharper*/
 *.resharper.user
 [Nn][Dd]epend[Oo]ut*/
 Ankh.NoLoad
-.vs
+.vs/
 
 #Other
 .svn
