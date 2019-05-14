@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,6 +74,7 @@ namespace OIGenerator
             setOIPayloadFromJSON(jsonData);
             mSupplierDunns = supplierDunns;
             mSupplierDept = supplierDept;
+            mAttachmentFilePath = attachmentFilePath;
             setFileByteArray(attachmentFilePath);
             setSoapPayload();
             setHttpRequest();
@@ -96,7 +94,6 @@ namespace OIGenerator
             HttpClient client = new HttpClient();
 
             return client;
-
         }
 
         private X509Certificate2 GetMyCert()
@@ -207,15 +204,12 @@ namespace OIGenerator
             soapEnvelope.Body = soapBody;
 
             //load the body:
-
             XmlDocument document = new XmlDocument();
             soapBody.Any = new XmlElement[1];
             document.LoadXml("<DOReceiveSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOReceiveSOAP>");
             soapBody.Any[0] = document.DocumentElement;
 
-
             //load the header
-
             XNamespace ns = string.Empty;
             XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
             XElement element = new XElement(defaultns + "DoHeaderSoap",
@@ -229,13 +223,10 @@ namespace OIGenerator
             soapHeader.Any = new XmlElement[1];
             soapHeader.Any[0] = document.DocumentElement;
 
-
-
             XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
             StringWriter writer = new StringWriter();
             serializer.Serialize(writer, soapEnvelope);
             mSoapPayload = writer.ToString();
-
         }
 
         public void setSoapPayload2()
@@ -264,7 +255,6 @@ namespace OIGenerator
                         payloadElement)));
 
             mSoapPayload = element.ToString();
-
         }
 
         private void setHttpRequest()
@@ -285,6 +275,7 @@ namespace OIGenerator
             string soapPayload = mSoapPayload;
             HttpContent soapContent = new StringContent(soapPayload, Encoding.UTF8, "text/xml");
             soapContent.Headers.Add("Content-Id", "<BodyPart>");
+            soapContent.Headers.Add("Content-Transfer-Encoding", "8bit");
             multicontent.Add(soapContent);
 
             byte[] attachmentPayload = mAttachment;
@@ -319,8 +310,12 @@ namespace OIGenerator
             var t = Task.Run(() => sendRequest());
             t.Wait();
             response = t.Result;
+
+            // HTTP 200 = Success
+            // HTTP 400 = Malformed Request
             return response;
         }
+
         private async Task<string> sendRequest()
         {
             var response = string.Empty;

@@ -13,11 +13,11 @@ namespace MyApplication
     {
         static void Main(string[] args)
         {
+            // These values need to be looked up from OpenInvoice
             string supplierDUNS = "247021421";
             string supplierDept = "Accounts Payable";
 
-            Console.WriteLine("about to start the application");
-
+            // These values will be parsed from the invoice
             Invoice invoiceObj = new Invoice();
             invoiceObj.companyCode = "RYAN";
             invoiceObj.companyName = "Ryan's Coffee Services Ltd";
@@ -29,16 +29,23 @@ namespace MyApplication
             invoiceObj.invoiceTotal = "84.78";
             invoiceObj.currencyCode = "CAD";
 
-            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://google.ca/api/getdata");
+            // Temp URI for compiling app
+            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://google.ca/api/getdata");
+
+            // Dev OpenInvoice URI
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard-api.openinvoice.com");
+
+            // Prod OpenInvoice URI
+            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com");
 
             generator.generateRequest(supplierDUNS, supplierDept, @"E:\Data\UiPath\AlbertaTubular\Attachments\Ryan\RyanLogo.pdf", invoiceObj);
-            Console.WriteLine("-------------OI Payload---------------");
-            Console.WriteLine(generator.getOIPayload());
-            Console.WriteLine("-------------Soap Payload---------------");
-            Console.WriteLine(generator.getSoapPayload());
-            Console.WriteLine("-------------Request Content Payload---------------");
+            //Console.WriteLine("-------------OI Payload---------------");
+            //Console.WriteLine(generator.getOIPayload());
+            //Console.WriteLine("-------------Soap Payload---------------");
+            //Console.WriteLine(generator.getSoapPayload());
+            //Console.WriteLine("-------------Request Content Payload---------------");
             Console.WriteLine(generator.getRequestContent());
-            //generator.send();
+            //Console.WriteLine(generator.send());
 
             /*
             JavaScriptSerializer js = new JavaScriptSerializer();
