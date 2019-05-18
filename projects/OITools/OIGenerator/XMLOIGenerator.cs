@@ -91,7 +91,11 @@ namespace OIGenerator
             HttpClientHandler handler = new HttpClientHandler();
             handler.ClientCertificates.Add(clientCert);
 
-            HttpClient client = new HttpClient();
+            HttpClient client = new HttpClient(handler);
+            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("Multipart/Related"));
+            client.DefaultRequestHeaders.Host = "onboard.openinvoice.com:5553";
+            byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
 
             return client;
         }
@@ -261,10 +265,11 @@ namespace OIGenerator
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(mEndPointURL));
             // set the basic authorization ----- Not needed
-            //byte[] credentials = Encoding.UTF8.GetBytes("username:password1234");
+            //byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
             //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
             // additional headers
-
+            //message.Headers.Host = "onboard.openinvoice.com:5555";
+ 
             // now add the multipart content
             MultipartContent multicontent = new MultipartContent("Related", "MIME-BOUNDARY");
             message.Content = multicontent;

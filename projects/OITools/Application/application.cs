@@ -33,19 +33,20 @@ namespace MyApplication
             //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://google.ca/api/getdata");
 
             // Dev OpenInvoice URI
-            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard-api.openinvoice.com");
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard.openinvoice.com/docp/api/supply-chain/v1/invoices");
+            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard.openinvoice.com/docp/api/supply-chain/v1/purchase-order.accept");
 
             // Prod OpenInvoice URI
             //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com");
 
-            generator.generateRequest(supplierDUNS, supplierDept, @"E:\Data\UiPath\AlbertaTubular\Attachments\Ryan\RyanLogo.pdf", invoiceObj);
+            generator.generateRequest(supplierDUNS, supplierDept, @"c:\test.pdf", invoiceObj);
             //Console.WriteLine("-------------OI Payload---------------");
             //Console.WriteLine(generator.getOIPayload());
             //Console.WriteLine("-------------Soap Payload---------------");
             //Console.WriteLine(generator.getSoapPayload());
             //Console.WriteLine("-------------Request Content Payload---------------");
             Console.WriteLine(generator.getRequestContent());
-            //Console.WriteLine(generator.send());
+            Console.WriteLine(generator.send());
 
             /*
             JavaScriptSerializer js = new JavaScriptSerializer();
