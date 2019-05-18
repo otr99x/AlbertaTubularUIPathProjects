@@ -29,39 +29,15 @@ namespace MyApplication
             invoiceObj.invoiceTotal = "84.78";
             invoiceObj.currencyCode = "CAD";
 
-            // Temp URI for compiling app
-            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://google.ca/api/getdata");
-
             // Dev OpenInvoice URI
-            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard.openinvoice.com/docp/api/supply-chain/v1/invoices");
-            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard.openinvoice.com/docp/api/supply-chain/v1/purchase-order.accept");
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard.openinvoice.com/docp/api/supply-chain/v1/invoices:5553");
 
             // Prod OpenInvoice URI
-            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com");
+            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com/docp/api/supply-chain/v1/invoices:5553");
 
             generator.generateRequest(supplierDUNS, supplierDept, @"c:\test.pdf", invoiceObj);
-            //Console.WriteLine("-------------OI Payload---------------");
-            //Console.WriteLine(generator.getOIPayload());
-            //Console.WriteLine("-------------Soap Payload---------------");
-            //Console.WriteLine(generator.getSoapPayload());
-            //Console.WriteLine("-------------Request Content Payload---------------");
-            Console.WriteLine(generator.getRequestContent());
+            //Console.WriteLine(generator.getRequestContent());
             Console.WriteLine(generator.send());
-
-            /*
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            string jsonData = js.Serialize(invoiceObj);
-            string invoiceXML = generator.getXMLFromJSON(jsonData);
-            Console.WriteLine(invoiceXML);
-            Console.WriteLine("----------------------------------");
-            string soapPayload = generator.getSoapPayload2(invoiceXML);
-            Console.WriteLine(soapPayload);
-            Console.WriteLine(generator.getFileString64(@"c:\test.pdf"));
-            Console.WriteLine(generator.hashData("Some Key", "This is the data to encrypt"));
-            XElement element = XElement.Parse("<OpenImageInvoice></OpenImageInvoice>");
-            Console.WriteLine(element.ToString());
-            Console.WriteLine(generator.getSoapPayload("<OpenImageInvoice></OpenImageInvoice>"));
-            */
         }
     }
 }

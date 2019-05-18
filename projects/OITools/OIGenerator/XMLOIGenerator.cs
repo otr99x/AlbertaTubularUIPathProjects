@@ -92,8 +92,7 @@ namespace OIGenerator
             handler.ClientCertificates.Add(clientCert);
 
             HttpClient client = new HttpClient(handler);
-            //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("Multipart/Related"));
-            client.DefaultRequestHeaders.Host = "onboard.openinvoice.com:5553";
+             //client.DefaultRequestHeaders.Host = "onboard.openinvoice.com:5553";
             byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
 
@@ -264,7 +263,6 @@ namespace OIGenerator
         private void setHttpRequest()
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(mEndPointURL));
-            // set the basic authorization ----- Not needed
             //byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
             //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
             // additional headers
@@ -273,9 +271,6 @@ namespace OIGenerator
             // now add the multipart content
             MultipartContent multicontent = new MultipartContent("Related", "MIME-BOUNDARY");
             message.Content = multicontent;
-
-            //multicontent.Headers.Remove("Content-Type");
-            //multicontent.Headers.TryAddWithoutValidation("Content-Type", "multipart/Related; boundary=MIME-BOUNDARY; type=text/xml");
 
             string soapPayload = mSoapPayload;
             HttpContent soapContent = new StringContent(soapPayload, Encoding.UTF8, "text/xml");
@@ -330,6 +325,11 @@ namespace OIGenerator
                 if (result.IsSuccessStatusCode)
                 {
                     response = result.StatusCode.ToString();
+                }
+                else
+                {
+                    // get the response message
+                    response = await result.Content.ReadAsStringAsync();
                 }
             }
             return response;
