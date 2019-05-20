@@ -51,6 +51,11 @@ namespace OIGenerator
             return mOIPayload;
         }
 
+        public string getOIHeader()
+        {
+            return mOIHeader;
+        }
+
         public string getRequestContent()
         {
             var response = string.Empty;

@@ -36,8 +36,9 @@ namespace MyApplication
             //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com/docp/api/supply-chain/v1/invoices:5553");
 
             generator.generateRequest(supplierDUNS, supplierDept, @"c:\test.pdf", invoiceObj);
+            //Console.WriteLine(generator.getOIHeader());
             //Console.WriteLine(generator.getOIPayload());
-            //Console.WriteLine(generator.getRequestContent());
+            Console.WriteLine(generator.getRequestContent());
             Console.WriteLine(generator.send());
             Console.ReadLine();
         }
