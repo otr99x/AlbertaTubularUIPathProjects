@@ -19,6 +19,7 @@ namespace OIGenerator
         private string mAttachmentFilePath;
         private HttpClient mHttpClient;
         private string mOIPayload;
+        private string mOIHeader;
         private byte[] mAttachment;
         private HttpRequestMessage mHttpRequestMessage;
         private string mSoapPayload;
@@ -32,6 +33,7 @@ namespace OIGenerator
             mSupplierDept = supplierDept;
             mEndPointURL = endpoint;
             mOIPayload = null;
+            mOIHeader = null;
             mAttachmentFilePath = null;
             mAttachment = null;
             mHttpRequestMessage = null;
@@ -64,6 +66,7 @@ namespace OIGenerator
             mSupplierDunns = supplierDunns;
             mSupplierDept = supplierDept;
             mAttachmentFilePath = attachmentFilePath;
+            setOIHeader();
             setFileByteArray(mAttachmentFilePath);
             setSoapPayload();
             setHttpRequest();
@@ -75,6 +78,7 @@ namespace OIGenerator
             mSupplierDunns = supplierDunns;
             mSupplierDept = supplierDept;
             mAttachmentFilePath = attachmentFilePath;
+            setOIHeader();
             setFileByteArray(attachmentFilePath);
             setSoapPayload();
             setHttpRequest();
@@ -116,6 +120,32 @@ namespace OIGenerator
             store.Close();
 
             return cert;
+        }
+
+        private void setOIHeader()
+        {
+            DeliveryInformation deliveryInfo = new DeliveryInformation();
+            deliveryInfo.DocumentType = deliveryInfoDocType.IMAGEINVOICE;
+
+            deliveryInfo.TrackingIdentifier = new DeliveryInformationTrackingIdentifier[1];
+            deliveryInfo.TrackingIdentifier[0] = new DeliveryInformationTrackingIdentifier();
+            deliveryInfo.TrackingIdentifier[0].indicatorSpecified = true;
+            deliveryInfo.TrackingIdentifier[0].indicator = DeliveryInformationTrackingIdentifierIndicator.correlationId;
+            deliveryInfo.TrackingIdentifier[0].Value = mUniqueTrackingIdentifier;
+
+
+            deliveryInfo.ReceiverIdentifier = new tradingPartnerIdType();
+            deliveryInfo.ReceiverIdentifier.identifierType = tradingPartnerIdTypeIdentifierType.DUNSNumber;
+            deliveryInfo.ReceiverIdentifier.Value = "200103377";
+
+            deliveryInfo.SenderIdentifier = new tradingPartnerIdType();
+            deliveryInfo.SenderIdentifier.identifierType = tradingPartnerIdTypeIdentifierType.DUNSNumber;
+            deliveryInfo.SenderIdentifier.Value = mSupplierDunns;
+
+            XmlSerializer serializer = new XmlSerializer(typeof(DeliveryInformation));
+            StringWriter writer = new StringWriter();
+            serializer.Serialize(writer, deliveryInfo);
+            mOIHeader = writer.ToString();
         }
 
         private void setOIPayloadFromJSON(string jsonData)
@@ -189,15 +219,14 @@ namespace OIGenerator
         {
             mAttachment = Encoding.UTF8.GetBytes(Convert.ToBase64String(File.ReadAllBytes(filename)));
 
-            //mAttachment = File.ReadAllBytes(filename);
-            //string mAttachmentStr =  Convert.ToBase64String(mAttachment);
-            //mAttachment = Encoding.UTF8.GetBytes(mAttachmentStr);
         }
 
         private void setSoapPayload()
         {
             XmlDocument payloadDoc = new XmlDocument();
             payloadDoc.LoadXml(mOIPayload);
+            XmlDocument headerDoc = new XmlDocument();
+            headerDoc.LoadXml(mOIHeader);
 
             //create the soap envelopoe
             Envelope soapEnvelope = new Envelope();
@@ -207,60 +236,30 @@ namespace OIGenerator
             soapEnvelope.Body = soapBody;
 
             //load the body:
-            XmlDocument document = new XmlDocument();
+            XmlDocument documentBody = new XmlDocument();
+            documentBody.LoadXml("<DOReceiveSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOReceiveSOAP>");
             soapBody.Any = new XmlElement[1];
-            document.LoadXml("<DOReceiveSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOReceiveSOAP>");
-            soapBody.Any[0] = document.DocumentElement;
+            soapBody.Any[0] = documentBody.DocumentElement;
 
             //load the header
-            XNamespace ns = string.Empty;
-            XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
-            XElement element = new XElement(defaultns + "DoHeaderSoap",
-               new XElement(defaultns + "DeliveryInformation",
-                            new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
-                            new XElement(defaultns + "TrackingIdentifier", mUniqueTrackingIdentifier),
-                            new XElement(defaultns + "ReceiverIdentifier", "200103377", new XAttribute("identifierType", "DUNSNumber")),
-                            new XElement(defaultns + "SenderIdentifier", mSupplierDunns, new XAttribute("identifierType", "DUNSNumber"))));
-
-            document.LoadXml(element.ToString());
+            XmlDocument documentHeader = new XmlDocument();
+            documentHeader.LoadXml("<DOHeaderSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + headerDoc.DocumentElement.OuterXml + "</DOHeaderSOAP>");
             soapHeader.Any = new XmlElement[1];
-            soapHeader.Any[0] = document.DocumentElement;
+            soapHeader.Any[0] = documentHeader.DocumentElement;
 
             XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
             StringWriter writer = new StringWriter();
-            serializer.Serialize(writer, soapEnvelope);
+
+            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/");
+            namespaces.Add("SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/");
+            namespaces.Add("xsd", "http://www.w3.org/1999/XMLSchema");
+            namespaces.Add("xsi", "http://www.w3.org/1999/XMLSchema-instance");
+            serializer.Serialize(writer, soapEnvelope, namespaces);
             mSoapPayload = writer.ToString();
         }
 
-        public void setSoapPayload2()
-        {
-            string clientDunns = mSupplierDunns;
-            string trackingIdentifier = mUniqueTrackingIdentifier;
-            XElement payloadElement = XElement.Parse(mOIPayload);
-            XNamespace ns = string.Empty;
-            XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
-            XNamespace ns2 = "http://schemas.xmlsoap.org/soap/envelope/";
-            XNamespace ns3 = "http://schemas.xmlsoap.org/soap/encoding/";
-            XNamespace ns4 = "http://www.w3.org/1999/XMLSchema";
-            XNamespace ns5 = "http://www.w3.org/1999/XMLSchema-instance";
-            XNamespace ns6 = "http://schemas.xmlsoap.org/soap/encoding/";
-
-            XElement element = new XElement(ns2 + "Envelope", new XAttribute(XNamespace.Xmlns + "SOAP-ENV", ns2), new XAttribute(XNamespace.Xmlns + "SOAP-ENC", ns3), new XAttribute(XNamespace.Xmlns + "xsd", ns4), new XAttribute(XNamespace.Xmlns + "xsi", ns5), new XAttribute(XNamespace.Xmlns + "encodingStyle", ns6),
-                new XElement(ns2 + "Header",
-                    new XElement(defaultns + "DoHeaderSOAP",
-                        new XElement(defaultns + "DeliveryInformation",
-                            new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
-                            new XElement(defaultns + "TrackingIdentifier", trackingIdentifier),
-                            new XElement(defaultns + "ReceiverIdentifier", "200103377", new XAttribute("identifierType", "DUNSNumber")),
-                            new XElement(defaultns + "SenderIdentifier", clientDunns, new XAttribute("identifierType", "DUNSNumber"))))),
-                new XElement(ns2 + "Body",
-                    new XElement(defaultns + "DOReceiveSOAP",
-                        payloadElement)));
-
-            mSoapPayload = element.ToString();
-        }
-
-        private void setHttpRequest()
+         private void setHttpRequest()
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(mEndPointURL));
             //byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
@@ -291,15 +290,6 @@ namespace OIGenerator
             attachmentContent.Headers.Add("Content-Id", "<cid: openImageAttachment" + mUniqueTrackingIdentifier + ">");
 
             multicontent.Add(attachmentContent);
-
-            // now get the hash of the entire stream --- Not needed
-            //Task<Stream> task = multicontent.ReadAsStreamAsync();
-            //task.Wait();
-            //Stream multicontentStream = task.Result;
-            //string hash = hashData("Some OI Key", multicontentStream);
-
-            // now add this hash to the header of the request
-            //message.Headers.Add("mac", hash);
 
             mHttpRequestMessage = message;
         }
@@ -334,84 +324,6 @@ namespace OIGenerator
             }
             return response;
         }
-        /*
-        public string hashData(string key, string message)
-        {
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            HMACSHA256 hmac = new HMACSHA256(keyByte);
-
-            byte[] messageByte = encoding.GetBytes(message);
-            byte[] hashMessage = hmac.ComputeHash(messageByte);
-
-            return Convert.ToBase64String(hashMessage);
-        }
-
-        public string hashData(string key, Stream stream)
-        {
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            byte[] keyByte = encoding.GetBytes(key);
-            HMACSHA256 hmac = new HMACSHA256(keyByte);
-
-            byte[] hashMessage = hmac.ComputeHash(stream);
-
-            return Convert.ToBase64String(hashMessage);
-       }
-
-        private void setFileString64(string filename)
-        {
-            byte[] afile = File.ReadAllBytes(filename);
-            mAttachment = Convert.ToBase64String(afile);
-        }
-
-        public string getSoapPayload2(string OIPayload)
-        {
-            XmlDocument payloadDoc = new XmlDocument();
-            payloadDoc.LoadXml(OIPayload);
-            
-            //create the soap envelopoe
-            Envelope soapEnvelope = new Envelope();
-            Header soapHeader = new Header();
-            soapEnvelope.Header = soapHeader;
-            Body soapBody = new Body();
-            soapEnvelope.Body = soapBody;
-
-            //load the body:
-
-            XmlDocument document = new XmlDocument();
-            soapBody.Any = new XmlElement[1];
-            document.LoadXml("<DOHeaderSOAP xmlns=\"http://www.digitaloilfield.com/ocp\">" + payloadDoc.DocumentElement.OuterXml + "</DOHeaderSOAP>");
-            soapBody.Any[0] = document.DocumentElement;
-
-            
-            //load the header
-
-            string clientDunns = "ClientDunnsNumber";
-            string trackingIdentifier = "some unique identifier";
-            XElement payloadElement = XElement.Parse(OIPayload);
-            XNamespace ns = string.Empty;
-            XNamespace defaultns = "http://www.digitaloilfield.com/ocp";
-            XElement element = new XElement(defaultns + "DoHeaderSoap",
-               new XElement(defaultns + "DeliveryInformation",
-                            new XElement(defaultns + "DocumentType", "INVOICEIMAGE"),
-                            new XElement(defaultns + "TrackingIdentifier", trackingIdentifier),
-                            new XElement(defaultns + "ReceiverIdentifier", "20010337", new XAttribute("identifierType", "DUNSNumber")),
-                            new XElement(defaultns + "SenderIdentifier", clientDunns, new XAttribute("identifierType", "DUNSNumber"))));
-
-            document.LoadXml(element.ToString());
-            soapHeader.Any = new XmlElement[1];
-            soapHeader.Any[0] = document.DocumentElement;
-
-            
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
-            StringWriter writer = new StringWriter();
-            serializer.Serialize(writer, soapEnvelope);
-            return writer.ToString();
-
-        }
-        
-        */
-
+ 
     }
 }
