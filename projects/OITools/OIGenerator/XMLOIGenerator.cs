@@ -135,8 +135,8 @@ namespace OIGenerator
 
             deliveryInfo.TrackingIdentifier = new DeliveryInformationTrackingIdentifier[1];
             deliveryInfo.TrackingIdentifier[0] = new DeliveryInformationTrackingIdentifier();
-            deliveryInfo.TrackingIdentifier[0].indicatorSpecified = true;
-            deliveryInfo.TrackingIdentifier[0].indicator = DeliveryInformationTrackingIdentifierIndicator.correlationId;
+            //deliveryInfo.TrackingIdentifier[0].indicatorSpecified = true;
+            //deliveryInfo.TrackingIdentifier[0].indicator = DeliveryInformationTrackingIdentifierIndicator.correlationId;
             deliveryInfo.TrackingIdentifier[0].Value = mUniqueTrackingIdentifier;
 
 
@@ -149,8 +149,10 @@ namespace OIGenerator
             deliveryInfo.SenderIdentifier.Value = mSupplierDunns;
 
             XmlSerializer serializer = new XmlSerializer(typeof(DeliveryInformation));
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "http://www.digitaloilfield.com/ocp");
             StringWriter writer = new StringWriter();
-            serializer.Serialize(writer, deliveryInfo);
+            serializer.Serialize(writer, deliveryInfo, ns);
             mOIHeader = writer.ToString();
         }
 
@@ -164,6 +166,9 @@ namespace OIGenerator
         private void setOIPayloadFromInvoiceObject(Invoice invoiceObj)
         {
             XmlSerializer serializer = new XmlSerializer(typeof(OpenImageInvoice));
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "http://www.digitaloilfield.com/ocp");
+
             OpenImageInvoice invoice = new OpenImageInvoice();
             OpenImageInvoiceInvoiceHeader header = new OpenImageInvoiceInvoiceHeader();
 
@@ -217,7 +222,7 @@ namespace OIGenerator
             invoice.AttachmentReference.Value = mUniqueTrackingIdentifier;
 
             StringWriter writer = new StringWriter();
-            serializer.Serialize(writer, invoice);
+            serializer.Serialize(writer, invoice, ns);
             mOIPayload = writer.ToString();
         }
 
@@ -255,7 +260,7 @@ namespace OIGenerator
 
             XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
             StringWriter writer = new StringWriter();
-
+ 
             XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
             namespaces.Add("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/");
             namespaces.Add("SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/");
