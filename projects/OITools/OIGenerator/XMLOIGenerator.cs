@@ -92,6 +92,7 @@ namespace OIGenerator
         private string getUniqueIdentifier()
         {
             return DateTime.Now.ToString("yyyyMMddHHmmss");
+            //return "1234";
         }
 
         private HttpClient getWebClient()
@@ -284,15 +285,12 @@ namespace OIGenerator
 
             byte[] attachmentPayload = mAttachment;
             HttpContent attachmentContent = new ByteArrayContent(attachmentPayload);
-            attachmentContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline")
-            {
-                FileName = mAttachmentFilePath
-            };
-
+            attachmentContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline");
+            attachmentContent.Headers.ContentDisposition.Parameters.Add(new NameValueHeaderValue("filename", "\"" + Path.GetFileName(mAttachmentFilePath) + "\""));
             attachmentContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-            attachmentContent.Headers.ContentType.Parameters.Add(new NameValueHeaderValue("name", "\"" + mAttachmentFilePath + "\""));
+            attachmentContent.Headers.ContentType.Parameters.Add(new NameValueHeaderValue("name", "\"" + Path.GetFileName(mAttachmentFilePath) + "\""));
             attachmentContent.Headers.Add("Content-Transfer-Encoding", "base64");
-            attachmentContent.Headers.Add("Content-Id", "<cid: openImageAttachment" + mUniqueTrackingIdentifier + ">");
+            attachmentContent.Headers.Add("Content-Id", "<cid:openImageAttachment" + mUniqueTrackingIdentifier + ">");
 
             multicontent.Add(attachmentContent);
 
