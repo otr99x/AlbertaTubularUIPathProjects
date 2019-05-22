@@ -14,8 +14,8 @@ namespace MyApplication
         static void Main(string[] args)
         {
             // These values need to be looked up from OpenInvoice
-            string supplierDUNS = "247021421";
-            string supplierDept = "Accounts Payable";
+            string supplierDUNS = "127369973";
+            string supplierDept = "01";
 
             // These values will be parsed from the invoice
             Invoice invoiceObj = new Invoice();

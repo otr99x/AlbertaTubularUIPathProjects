@@ -151,7 +151,7 @@ namespace OIGenerator
             XmlSerializer serializer = new XmlSerializer(typeof(DeliveryInformation));
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "http://www.digitaloilfield.com/ocp");
-            StringWriter writer = new StringWriter();
+            StringWriterUtf8 writer = new StringWriterUtf8();
             serializer.Serialize(writer, deliveryInfo, ns);
             mOIHeader = writer.ToString();
         }
@@ -221,7 +221,7 @@ namespace OIGenerator
             invoice.AttachmentReference.href = "cid:openImageAttachment" + mUniqueTrackingIdentifier;
             invoice.AttachmentReference.Value = mUniqueTrackingIdentifier;
 
-            StringWriter writer = new StringWriter();
+            StringWriterUtf8 writer = new StringWriterUtf8();
             serializer.Serialize(writer, invoice, ns);
             mOIPayload = writer.ToString();
         }
@@ -259,7 +259,7 @@ namespace OIGenerator
             soapHeader.Any[0] = documentHeader.DocumentElement;
 
             XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
-            StringWriter writer = new StringWriter();
+            StringWriterUtf8 writer = new StringWriterUtf8();
  
             XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
             namespaces.Add("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/");
@@ -281,9 +281,9 @@ namespace OIGenerator
             // now add the multipart content
             MultipartContent multicontent = new MultipartContent("Related", "MIME-BOUNDARY");
             message.Content = multicontent;
-
+ 
             string soapPayload = mSoapPayload;
-            HttpContent soapContent = new StringContent(soapPayload, Encoding.UTF8, "text/xml");
+            HttpContent soapContent = new StringContent(soapPayload, Encoding.UTF8, "application/xml");
             soapContent.Headers.Add("Content-Id", "<BodyPart>");
             soapContent.Headers.Add("Content-Transfer-Encoding", "8bit");
             multicontent.Add(soapContent);
