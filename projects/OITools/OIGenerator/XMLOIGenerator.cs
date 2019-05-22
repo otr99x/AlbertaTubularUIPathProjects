@@ -151,9 +151,11 @@ namespace OIGenerator
             XmlSerializer serializer = new XmlSerializer(typeof(DeliveryInformation));
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "http://www.digitaloilfield.com/ocp");
-            StringWriterUtf8 writer = new StringWriterUtf8();
-            serializer.Serialize(writer, deliveryInfo, ns);
-            mOIHeader = writer.ToString();
+            using (StringWriterUtf8 writer = new StringWriterUtf8())
+            {
+                serializer.Serialize(writer, deliveryInfo, ns);
+                mOIHeader = writer.ToString();
+            }
         }
 
         private void setOIPayloadFromJSON(string jsonData)
@@ -221,9 +223,11 @@ namespace OIGenerator
             invoice.AttachmentReference.href = "cid:openImageAttachment" + mUniqueTrackingIdentifier;
             invoice.AttachmentReference.Value = mUniqueTrackingIdentifier;
 
-            StringWriterUtf8 writer = new StringWriterUtf8();
-            serializer.Serialize(writer, invoice, ns);
-            mOIPayload = writer.ToString();
+            using (StringWriterUtf8 writer = new StringWriterUtf8())
+            {
+                serializer.Serialize(writer, invoice, ns);
+                mOIPayload = writer.ToString();
+            }
         }
 
         private void setFileByteArray(string filename)
@@ -259,15 +263,17 @@ namespace OIGenerator
             soapHeader.Any[0] = documentHeader.DocumentElement;
 
             XmlSerializer serializer = new XmlSerializer(typeof(Envelope));
-            StringWriterUtf8 writer = new StringWriterUtf8();
- 
             XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
             namespaces.Add("SOAP-ENV", "http://schemas.xmlsoap.org/soap/envelope/");
             namespaces.Add("SOAP-ENC", "http://schemas.xmlsoap.org/soap/encoding/");
             namespaces.Add("xsd", "http://www.w3.org/1999/XMLSchema");
             namespaces.Add("xsi", "http://www.w3.org/1999/XMLSchema-instance");
-            serializer.Serialize(writer, soapEnvelope, namespaces);
-            mSoapPayload = writer.ToString();
+
+            using (StringWriterUtf8 writer = new StringWriterUtf8())
+            {
+               serializer.Serialize(writer, soapEnvelope, namespaces);
+                mSoapPayload = writer.ToString();
+            }
         }
 
          private void setHttpRequest()
