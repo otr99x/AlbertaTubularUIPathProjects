@@ -30,7 +30,7 @@ namespace MyApplication
             invoiceObj.currencyCode = "CAD";
 
             // Dev OpenInvoice URI
-            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard.openinvoice.com/docp/api/supply-chain/v1/invoices:5553");
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard-api.openinvoice.com/docp/api/supply-chain/v1/invoices");
 
             // Prod OpenInvoice URI
             //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com/docp/api/supply-chain/v1/invoices:5553");

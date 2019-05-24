@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -102,18 +104,26 @@ namespace OIGenerator
             handler.ClientCertificates.Add(clientCert);
 
             HttpClient client = new HttpClient(handler);
-             //client.DefaultRequestHeaders.Host = "onboard.openinvoice.com:5553";
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | (SecurityProtocolType)3072;
+            ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(AllwaysGoodCertificate);
+
+            //client.DefaultRequestHeaders.Host = "onboard.openinvoice.com:5553";
             byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
 
             return client;
         }
 
+        private static bool AllwaysGoodCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors policyErrors)
+        {
+            return true;
+        }
+
         private X509Certificate2 GetMyCert()
         {
             X509Certificate2 cert = null;
 
-            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
             store.Open(OpenFlags.ReadOnly);
             X509Certificate2Collection certCollection = store.Certificates.Find
             (
