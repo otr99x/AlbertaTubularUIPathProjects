@@ -73,9 +73,9 @@ namespace OIGenerator
             mSupplierDunns = supplierDunns;
             mSupplierDept = supplierDept;
             mAttachmentFilePath = attachmentFilePath;
-            setOIHeader();
+            //setOIHeader();
             setFileByteArray(mAttachmentFilePath);
-            setSoapPayload();
+            //setSoapPayload();
             setHttpRequest();
         }
 
@@ -85,16 +85,15 @@ namespace OIGenerator
             mSupplierDunns = supplierDunns;
             mSupplierDept = supplierDept;
             mAttachmentFilePath = attachmentFilePath;
-            setOIHeader();
-            setFileByteArray(attachmentFilePath);
-            setSoapPayload();
+            //setOIHeader();
+            setFileByteArray(mAttachmentFilePath);
+            //setSoapPayload();
             setHttpRequest();
         }
 
         private string getUniqueIdentifier()
         {
             return DateTime.Now.ToString("yyyyMMddHHmmss");
-            //return "1234";
         }
 
         private HttpClient getWebClient()
@@ -106,10 +105,6 @@ namespace OIGenerator
             HttpClient client = new HttpClient(handler);
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12 | (SecurityProtocolType)3072;
             ServicePointManager.ServerCertificateValidationCallback += new RemoteCertificateValidationCallback(AllwaysGoodCertificate);
-
-            //client.DefaultRequestHeaders.Host = "onboard.openinvoice.com:5553";
-            byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
 
             return client;
         }
@@ -129,12 +124,13 @@ namespace OIGenerator
             (
                 X509FindType.FindBySerialNumber, "1fd9", true
             );
+
             if (certCollection.Count > 0)
             {
                 cert = certCollection[0];
             }
-            store.Close();
 
+            store.Close();
             return cert;
         }
 
@@ -289,29 +285,25 @@ namespace OIGenerator
          private void setHttpRequest()
         {
             var message = new HttpRequestMessage(HttpMethod.Post, new Uri(mEndPointURL));
-            //byte[] credentials = Encoding.UTF8.GetBytes("approver@albertatubular:Oildex18");
-            //message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(credentials));
-            // additional headers
-            //message.Headers.Host = "onboard.openinvoice.com:5555";
  
             // now add the multipart content
-            MultipartContent multicontent = new MultipartContent("Related", "MIME-BOUNDARY");
+            MultipartContent multicontent = new MultipartContent("Mixed", "MIME-BOUNDARY");
             message.Content = multicontent;
  
             string soapPayload = mSoapPayload;
-            HttpContent soapContent = new StringContent(soapPayload, Encoding.UTF8, "application/xml");
+            HttpContent soapContent = new StringContent(mOIPayload, Encoding.UTF8, "application/xml");
             soapContent.Headers.Add("Content-Id", "<BodyPart>");
             soapContent.Headers.Add("Content-Transfer-Encoding", "8bit");
             multicontent.Add(soapContent);
 
             byte[] attachmentPayload = mAttachment;
             HttpContent attachmentContent = new ByteArrayContent(attachmentPayload);
-            attachmentContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline");
-            attachmentContent.Headers.ContentDisposition.Parameters.Add(new NameValueHeaderValue("filename", "\"" + Path.GetFileName(mAttachmentFilePath) + "\""));
+            //attachmentContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("inline");
+            //attachmentContent.Headers.ContentDisposition.Parameters.Add(new NameValueHeaderValue("filename", "\"" + Path.GetFileName(mAttachmentFilePath) + "\""));
             attachmentContent.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
             attachmentContent.Headers.ContentType.Parameters.Add(new NameValueHeaderValue("name", "\"" + Path.GetFileName(mAttachmentFilePath) + "\""));
             attachmentContent.Headers.Add("Content-Transfer-Encoding", "base64");
-            attachmentContent.Headers.Add("Content-Id", "<cid:openImageAttachment" + mUniqueTrackingIdentifier + ">");
+            attachmentContent.Headers.Add("Content-Id", "<" + mUniqueTrackingIdentifier + ">");
 
             multicontent.Add(attachmentContent);
 

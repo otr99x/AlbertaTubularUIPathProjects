@@ -30,17 +30,17 @@ namespace MyApplication
             invoiceObj.currencyCode = "CAD";
 
             // Dev OpenInvoice URI
-            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard-api.openinvoice.com/docp/api/supply-chain/v1/invoices");
+            XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://onboard-api.openinvoice.com/docp/supply-chain/v1/invoices");
 
             // Prod OpenInvoice URI
-            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com/docp/api/supply-chain/v1/invoices:5553");
+            //XMLOIGenerator generator = new XMLOIGenerator(supplierDUNS, supplierDept, @"https://api.openinvoice.com/docp/api/supply-chain/v1/invoices");
 
-            generator.generateRequest(supplierDUNS, supplierDept, @"c:\test.pdf", invoiceObj);
+            generator.generateRequest(supplierDUNS, supplierDept, @"E:\Data\UiPath\AlbertaTubular\tmp\RyanLogo.pdf", invoiceObj);
             //Console.WriteLine(generator.getOIHeader());
             //Console.WriteLine(generator.getOIPayload());
             Console.WriteLine(generator.getRequestContent());
             Console.WriteLine(generator.send());
-            Console.ReadLine();
+            //Console.ReadLine();
         }
     }
 }
