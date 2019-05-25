@@ -95,6 +95,19 @@
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.1.0\\lib/net452/UiPath.Vision.Package.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.1.0\\lib/net452/UiPath.Vision.dll"
       ]
+    },
+    {
+      "Package": {
+        "Id": "UiPath.PDF.Activities",
+        "Version": "2.0.0"
+      },
+      "Assemblies": [
+        "C:\\Users\\Remrin\\.nuget\\packages\\bitmiracle.docotic.pdf/5.2.8369\\lib/net40/BitMiracle.Docotic.Pdf.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\system.valuetuple/4.5.0\\lib/net461/System.ValueTuple.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.Activities.Design.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.Activities.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.dll"
+      ]
     }
   ],
   "Conflicts": [],
@@ -102,6 +115,11 @@
     "AvalonEdit": {
       "Id": "AvalonEdit",
       "Version": "5.0.3",
+      "Dependencies": []
+    },
+    "BitMiracle.Docotic.Pdf": {
+      "Id": "BitMiracle.Docotic.Pdf",
+      "Version": "5.2.8369",
       "Dependencies": []
     },
     "BouncyCastle": {
@@ -194,6 +212,11 @@
       "Version": "0.86.0",
       "Dependencies": []
     },
+    "System.ValueTuple": {
+      "Id": "System.ValueTuple",
+      "Version": "4.5.0",
+      "Dependencies": []
+    },
     "UiPath": {
       "Id": "UiPath",
       "Version": "9.0.6893.27943",
@@ -236,6 +259,20 @@
         {
           "Item1": "BouncyCastle",
           "Item2": "[1.8.1, )"
+        }
+      ]
+    },
+    "UiPath.PDF.Activities": {
+      "Id": "UiPath.PDF.Activities",
+      "Version": "2.0.0",
+      "Dependencies": [
+        {
+          "Item1": "System.ValueTuple",
+          "Item2": "[4.5.0, )"
+        },
+        {
+          "Item1": "BitMiracle.Docotic.Pdf",
+          "Item2": "[5.2.8369, )"
         }
       ]
     },
