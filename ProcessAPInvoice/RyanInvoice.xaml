@@ -87,13 +87,13 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Acrobatsd'" sap:VirtualizedContainerService.HintSize="500,2267" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="251ed7bbd6431b0e23f9c046ee5adb84" Selector="&lt;wnd app='acrord32.exe' cls='AcrobatSDIWindow' /&gt;">
+            <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Acrobatsd'" sap:VirtualizedContainerService.HintSize="500,2622" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="251ed7bbd6431b0e23f9c046ee5adb84" Selector="&lt;wnd app='acrord32.exe' cls='AcrobatSDIWindow' /&gt;">
               <ui:WindowScope.Body>
                 <ActivityAction x:TypeArguments="x:Object">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Do - Attach Window" sap:VirtualizedContainerService.HintSize="486,2121" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                  <Sequence DisplayName="Do - Attach Window" sap:VirtualizedContainerService.HintSize="486,2476" sap2010:WorkflowViewState.IdRef="Sequence_3">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -229,34 +229,34 @@
                         <OutArgument x:TypeArguments="x:String">[invoiceTotal]</OutArgument>
                       </ui:GetVisibleText.Text>
                     </ui:GetVisibleText>
+                    <If Condition="[invoiceTotal=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_6">
+                      <If.Then>
+                        <ui:GetOCRText WordsInfo="{x:Null}" DisplayName="Get OCR Text - Invoice Total" sap:VirtualizedContainerService.HintSize="314,168" sap2010:WorkflowViewState.IdRef="GetOCRText_5">
+                          <ui:GetOCRText.OCREngine>
+                            <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
+                              <ActivityFunc.Argument>
+                                <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+                              </ActivityFunc.Argument>
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_5" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="2" />
+                            </ActivityFunc>
+                          </ui:GetOCRText.OCREngine>
+                          <ui:GetOCRText.Target>
+                            <ui:Target Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="d30c45b87a4c7d914d56a6d79389ea28" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE">
+                              <ui:Target.ClippingRegion>
+                                <ui:Region Rectangle="1254, 781, 87, 29" />
+                              </ui:Target.ClippingRegion>
+                            </ui:Target>
+                          </ui:GetOCRText.Target>
+                          <ui:GetOCRText.Text>
+                            <OutArgument x:TypeArguments="x:String">[invoiceTotal]</OutArgument>
+                          </ui:GetOCRText.Text>
+                        </ui:GetOCRText>
+                      </If.Then>
+                    </If>
                   </Sequence>
                 </ActivityAction>
               </ui:WindowScope.Body>
             </ui:WindowScope>
-            <If Condition="[invoiceTotal=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="500,315" sap2010:WorkflowViewState.IdRef="If_6">
-              <If.Then>
-                <ui:GetOCRText WordsInfo="{x:Null}" DisplayName="Get OCR Text - Invoice Total" sap:VirtualizedContainerService.HintSize="314,168" sap2010:WorkflowViewState.IdRef="GetOCRText_5">
-                  <ui:GetOCRText.OCREngine>
-                    <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
-                      <ActivityFunc.Argument>
-                        <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
-                      </ActivityFunc.Argument>
-                      <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_5" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="2" />
-                    </ActivityFunc>
-                  </ui:GetOCRText.OCREngine>
-                  <ui:GetOCRText.Target>
-                    <ui:Target Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="d30c45b87a4c7d914d56a6d79389ea28" Selector="&lt;wnd app='acrord32.exe' cls='AcrobatSDIWindow' title='Ryan-B42475-20190525.pdf - Adobe Acrobat Reader DC' /&gt;&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE">
-                      <ui:Target.ClippingRegion>
-                        <ui:Region Rectangle="1254, 781, 87, 29" />
-                      </ui:Target.ClippingRegion>
-                    </ui:Target>
-                  </ui:GetOCRText.Target>
-                  <ui:GetOCRText.Text>
-                    <OutArgument x:TypeArguments="x:String">[invoiceTotal]</OutArgument>
-                  </ui:GetOCRText.Text>
-                </ui:GetOCRText>
-              </If.Then>
-            </If>
             <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xA;'&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xA;'&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_gstTotal = IO_gstTotal.Trim&#xA;'&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
               <ui:InvokeCode.Arguments>
                 <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceNumber">[InvoiceNumber]</InOutArgument>
