@@ -6,7 +6,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>598,3924</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>598,4091</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -59,7 +59,7 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Sequence - RyanInvoice" sap:VirtualizedContainerService.HintSize="558,3844" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence DisplayName="Sequence - RyanInvoice" sap:VirtualizedContainerService.HintSize="558,4011" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -70,13 +70,13 @@
         <Throw Exception="[new Exception(&quot;BlankInvoiceFile exception!&quot;+VbCrLf+VbCrLf+&quot;Calling workflow either passed a blank invoice filename or this sequence was executed independently.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
       </If.Then>
     </If>
-    <ui:OpenApplication ApplicationWindow="{x:Null}" WorkingDirectory="{x:Null}" Arguments="[&quot; &quot;&quot;&quot;&quot;/A zoom=100 &quot;&quot;&quot;&quot; &quot; + InvoiceFile]" DisplayName="Open Application 'AcroRd32.exe Adobe'" FileName="C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe" sap:VirtualizedContainerService.HintSize="536,3472" sap2010:WorkflowViewState.IdRef="OpenApplication_1" InformativeScreenshot="462d2c0ffc235aab7b57b365244406b6" Selector="&lt;wnd app='acrord32.exe' omit:cls='AcrobatSDIWindow' omit:title='Adobe Acrobat Reader DC' /&gt;" TimeoutMS="5000">
+    <ui:OpenApplication ApplicationWindow="{x:Null}" WorkingDirectory="{x:Null}" Arguments="[&quot; &quot;&quot;&quot;&quot;/A zoom=100 &quot;&quot;&quot;&quot; &quot; + &quot;&quot;&quot;&quot; + InvoiceFile + &quot;&quot;&quot;&quot;]" DisplayName="Open Application 'AcroRd32.exe Adobe'" FileName="C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe" sap:VirtualizedContainerService.HintSize="536,3639" sap2010:WorkflowViewState.IdRef="OpenApplication_1" InformativeScreenshot="462d2c0ffc235aab7b57b365244406b6" Selector="&lt;wnd app='acrord32.exe' omit:cls='AcrobatSDIWindow' omit:title='Adobe Acrobat Reader DC' /&gt;" TimeoutMS="5000">
       <ui:OpenApplication.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Do - Open Acrobat" sap:VirtualizedContainerService.HintSize="522,3326" sap2010:WorkflowViewState.IdRef="Sequence_1">
+          <Sequence DisplayName="Do - Open Acrobat" sap:VirtualizedContainerService.HintSize="522,3493" sap2010:WorkflowViewState.IdRef="Sequence_1">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="invoiceDate" />
               <Variable x:TypeArguments="x:String" Name="gstTotal" />
@@ -87,6 +87,7 @@
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
+            <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize Window" sap:VirtualizedContainerService.HintSize="500,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_1" />
             <ui:WindowScope ApplicationWindow="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" Window="{x:Null}" DisplayName="Attach Window 'Acrobatsd'" sap:VirtualizedContainerService.HintSize="500,2622" sap2010:WorkflowViewState.IdRef="WindowScope_1" InformativeScreenshot="251ed7bbd6431b0e23f9c046ee5adb84" Selector="&lt;wnd app='acrord32.exe' cls='AcrobatSDIWindow' /&gt;">
               <ui:WindowScope.Body>
                 <ActivityAction x:TypeArguments="x:Object">
@@ -104,7 +105,7 @@
                         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7eb81c44704d6e077394ae06269a92ba" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE" />
                       </ui:SendHotkey.Target>
                     </ui:SendHotkey>
-                    <ui:GetVisibleText WordsInfo="{x:Null}" DisplayName="Get Visible Text - Invoice Number" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_2" Separators=" ">
+                    <ui:GetVisibleText WordsInfo="{x:Null}" ContinueOnError="True" DisplayName="Get Visible Text - Invoice Number" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_2" Separators=" ">
                       <ui:GetVisibleText.Target>
                         <ui:Target Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="c08f17409825bd87b5d3f211b70dacd9" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE">
                           <ui:Target.ClippingRegion>
@@ -124,7 +125,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_2" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="2" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_2" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -140,7 +141,7 @@
                         </ui:GetOCRText>
                       </If.Then>
                     </If>
-                    <ui:GetVisibleText WordsInfo="{x:Null}" DisplayName="Get Visible Text - Invoice Date" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_3" Separators=" ">
+                    <ui:GetVisibleText WordsInfo="{x:Null}" ContinueOnError="True" DisplayName="Get Visible Text - Invoice Date" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_3" Separators=" ">
                       <ui:GetVisibleText.Target>
                         <ui:Target Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="09de240a0bff17bd511a4793297a5f8a" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE">
                           <ui:Target.ClippingRegion>
@@ -181,7 +182,7 @@
                         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7eb81c44704d6e077394ae06269a92ba" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE" />
                       </ui:SendHotkey.Target>
                     </ui:SendHotkey>
-                    <ui:GetVisibleText WordsInfo="{x:Null}" DisplayName="Get Visible Text - GST Total" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_4">
+                    <ui:GetVisibleText WordsInfo="{x:Null}" ContinueOnError="True" DisplayName="Get Visible Text - GST Total" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_4">
                       <ui:GetVisibleText.Target>
                         <ui:Target Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="cf3b854d99284bd848f361b3f0609a57" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE">
                           <ui:Target.ClippingRegion>
@@ -201,7 +202,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_4" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="2" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_4" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -217,7 +218,7 @@
                         </ui:GetOCRText>
                       </If.Then>
                     </If>
-                    <ui:GetVisibleText WordsInfo="{x:Null}" DisplayName="Get Visible Text - Invoice Total" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_5">
+                    <ui:GetVisibleText WordsInfo="{x:Null}" ContinueOnError="True" DisplayName="Get Visible Text - Invoice Total" FormattedText="False" sap:VirtualizedContainerService.HintSize="464,106" sap2010:WorkflowViewState.IdRef="GetVisibleText_5">
                       <ui:GetVisibleText.Target>
                         <ui:Target Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8d3fa9683b2011ed0f73f15ea0903e98" Selector="&lt;wnd cls='AVL_AVView' idx='2' title='AVSplitterView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrolledPageView' /&gt;&lt;wnd cls='AVL_AVView' title='AVScrollView' /&gt;&lt;wnd cls='AVL_AVView' title='AVPageView' /&gt;" WaitForReady="INTERACTIVE">
                           <ui:Target.ClippingRegion>
@@ -237,7 +238,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_5" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="2" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_5" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -257,7 +258,7 @@
                 </ActivityAction>
               </ui:WindowScope.Body>
             </ui:WindowScope>
-            <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xA;'&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xA;'&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_gstTotal = IO_gstTotal.Trim&#xA;'&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xD;&#xA;'&#xD;&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xD;&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;'&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xD;&#xA;IO_gstTotal = IO_gstTotal.Trim&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;'&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
               <ui:InvokeCode.Arguments>
                 <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceNumber">[InvoiceNumber]</InOutArgument>
                 <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[invoiceDate]</InOutArgument>
@@ -265,8 +266,12 @@
                 <InOutArgument x:TypeArguments="x:String" x:Key="IO_invoiceTotal">[invoiceTotal]</InOutArgument>
               </ui:InvokeCode.Arguments>
             </ui:InvokeCode>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="500,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Invoice number: &quot; +&quot;|&quot;+ InvoiceNumber +&quot;|&quot;+VbCrLf+&#xA;&quot;Invoice date: &quot; +&quot;|&quot;+ invoiceDate +&quot;|&quot;+VbCrLf+&#xA;&quot;GST Total: &quot; +&quot;|&quot;+ gstTotal +&quot;|&quot;+VbCrLf+&#xA;&quot;Invoice Total: &quot; +&quot;|&quot;+ invoiceTotal +&quot;|&quot;]" />
-            <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="500,59" sap2010:WorkflowViewState.IdRef="MessageBox_3" Text="Done processing invoice, click OK to close Acrobat!" TopMost="True" />
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Ryan's date formatted as dd-MMM-yyyy&#xD;&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xD;&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;dd-MMM-yyyy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+              <ui:InvokeCode.Arguments>
+                <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[invoiceDate]</InOutArgument>
+              </ui:InvokeCode.Arguments>
+            </ui:InvokeCode>
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="500,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Invoice number: &quot; +&quot;&lt;&quot;+ InvoiceNumber +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice date: &quot; +&quot;&lt;&quot;+ invoiceDate +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;GST Total: &quot; +&quot;&lt;&quot;+ gstTotal +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice Total: &quot; +&quot;&lt;&quot;+ invoiceTotal +&quot;&gt;&quot;]" />
             <ui:CloseApplication DisplayName="Close Application 'AcroRd32.exe Adobe'" sap:VirtualizedContainerService.HintSize="500,106" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
               <ui:CloseApplication.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a92dc645aa8a5f1eedaf8d64d4cf5335" WaitForReady="INTERACTIVE" />

@@ -157,7 +157,12 @@
                             <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[invoiceNumber]</OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                         </ui:InvokeWorkflowFile>
-                        <x:Null x:Key="BHD" />
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="BHD" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="BHDInvoice.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[invoiceFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[invoiceNumber]</OutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
                       </Switch>
                       <If Condition="[InvoiceNumber = &quot;&quot;]" sap:VirtualizedContainerService.HintSize="476,208" sap2010:WorkflowViewState.IdRef="If_3">
                         <If.Then>
