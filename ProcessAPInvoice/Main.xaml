@@ -87,13 +87,13 @@
           <av:PointCollection x:Key="ConnectorLocation">380,488.04 380,537.04</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEachRow CurrentIndex="[i]" DataTable="[companyTable]" DisplayName="For Each Row - Company" sap:VirtualizedContainerService.HintSize="566,1837" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow CurrentIndex="[i]" DataTable="[companyTable]" DisplayName="For Each Row - Company" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
         <ui:ForEachRow.Body>
           <ActivityAction x:TypeArguments="sd:DataRow">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Body - For Each Company" sap:VirtualizedContainerService.HintSize="536,1689" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence DisplayName="Body - For Each Company" sap:VirtualizedContainerService.HintSize="536,1822" sap2010:WorkflowViewState.IdRef="Sequence_2">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:String" Name="companyName" />
               </Sequence.Variables>
@@ -119,13 +119,13 @@
                 </Assign.Value>
               </Assign>
               <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="514,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Processing folder: &quot; + companyFolder]" />
-              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each - File" sap:VirtualizedContainerService.HintSize="514,1234" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Directory.GetFiles (companyFolder)]">
+              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each - File" sap:VirtualizedContainerService.HintSize="514,1367" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Directory.GetFiles (companyFolder)]">
                 <ui:ForEach.Body>
                   <ActivityAction x:TypeArguments="x:Object">
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="x:Object" Name="fileName" />
                     </ActivityAction.Argument>
-                    <Sequence DisplayName="Body - For Each File" sap:VirtualizedContainerService.HintSize="498,1100" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                    <Sequence DisplayName="Body - For Each File" sap:VirtualizedContainerService.HintSize="498,1233" sap2010:WorkflowViewState.IdRef="Sequence_1">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:String" Name="invoiceFile" />
                         <Variable x:TypeArguments="x:String" Name="invoiceNumber" />
@@ -145,11 +145,16 @@
                         </Assign.Value>
                       </Assign>
                       <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="476,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Invoice file: &quot; + invoiceFile]" />
-                      <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[companyName]" sap:VirtualizedContainerService.HintSize="476,204" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                      <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[companyName]" sap:VirtualizedContainerService.HintSize="476,337" sap2010:WorkflowViewState.IdRef="Switch`1_1">
                         <Switch.Default>
                           <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="Unknown Company!" />
                         </Switch.Default>
-                        <x:Null x:Key="Cintas" />
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="Cintas" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="CintasInvoice.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[invoiceFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[invoiceNumber]</OutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
                         <x:Null x:Key="Rhino" />
                         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="Ryan" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="RyanInvoice.xaml">
                           <ui:InvokeWorkflowFile.Arguments>

@@ -3,11 +3,11 @@
   "description": "Alberta Tubular Workflow: Process saved PDF invoices capturing fields to upload to OpenInvoice.",
   "main": "Main.xaml",
   "dependencies": {
-    "UiPath.Excel.Activities": "[2.4.6884.25683]",
-    "UiPath.Mail.Activities": "[1.2.6863.29868]",
+    "UiPath.Excel.Activities": "[2.6.1]",
+    "UiPath.Mail.Activities": "[1.5.0]",
     "UiPath.PDF.Activities": "[2.0.0]",
-    "UiPath.System.Activities": "[18.3.6897.22524]",
-    "UiPath.UIAutomation.Activities": "[18.3.6897.22543]"
+    "UiPath.System.Activities": "[19.5.0]",
+    "UiPath.UIAutomation.Activities": "[19.5.0]"
   },
   "schemaVersion": "3.2",
   "studioVersion": "18.4.0.6",
