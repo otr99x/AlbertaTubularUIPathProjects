@@ -2,19 +2,6 @@
   "Packages": [
     {
       "Package": {
-        "Id": "UiPath.PDF.Activities",
-        "Version": "2.0.0"
-      },
-      "Assemblies": [
-        "C:\\Users\\Remrin\\.nuget\\packages\\bitmiracle.docotic.pdf/5.2.8369\\lib/net40/BitMiracle.Docotic.Pdf.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\system.valuetuple/4.5.0\\lib/net461/System.ValueTuple.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.Activities.Design.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.Activities.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.dll"
-      ]
-    },
-    {
-      "Package": {
         "Id": "UiPath.Excel.Activities",
         "Version": "2.6.1"
       },
@@ -23,10 +10,10 @@
         "C:\\Users\\Remrin\\.nuget\\packages\\csvhelper/2.13.5\\lib/net40-client/CsvHelper.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\documentformat.openxml/2.5.0\\lib/DocumentFormat.OpenXml.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\microsoft.visualstudio.ole.interop/7.10.6071\\lib/Microsoft.VisualStudio.OLE.Interop.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\npoi/2.4.1\\lib/net45/NPOI.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\npoi/2.4.1\\lib/net45/NPOI.OOXML.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\npoi/2.4.1\\lib/net45/NPOI.OpenXml4Net.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\npoi/2.4.1\\lib/net45/NPOI.OpenXmlFormats.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\npoi/2.4.1\\lib/net45/NPOI.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\sharpziplib/1.0.0\\lib/net45/ICSharpCode.SharpZipLib.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.excel.activities/2.6.1\\lib/net461/UiPath.Excel.Activities.Design.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.excel.activities/2.6.1\\lib/net461/UiPath.Excel.Activities.dll",
@@ -48,6 +35,19 @@
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.mail.activities/1.5.0\\lib/net452/UiPath.Mail.Activities.Design.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.mail.activities/1.5.0\\lib/net452/UiPath.Mail.Activities.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.mail.activities/1.5.0\\lib/net452/UiPath.Mail.dll"
+      ]
+    },
+    {
+      "Package": {
+        "Id": "UiPath.PDF.Activities",
+        "Version": "2.0.0"
+      },
+      "Assemblies": [
+        "C:\\Users\\Remrin\\.nuget\\packages\\bitmiracle.docotic.pdf/5.2.8369\\lib/net40/BitMiracle.Docotic.Pdf.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\system.valuetuple/4.5.0\\lib/net461/System.ValueTuple.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.Activities.Design.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.Activities.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.pdf.activities/2.0.0\\lib/net461/UiPath.PDF.dll"
       ]
     },
     {
@@ -110,11 +110,20 @@
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.AbbyyFRECommon.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.AzureComputerVision.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.Core.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.GoogleCloud.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.Microsoft.dll",
         "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.MicrosoftCloud.dll",
-        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.Tesseract.dll"
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.Tesseract.dll",
+        "C:\\Users\\Remrin\\.nuget\\packages\\uipath.vision/1.6.0\\lib/net452/UiPath.Vision.dll"
+      ]
+    },
+    {
+      "Package": {
+        "Id": "OIGenerator",
+        "Version": "0.0.1"
+      },
+      "Assemblies": [
+        "C:\\Users\\Remrin\\.nuget\\packages\\oigenerator/0.0.1\\lib/OIGenerator.dll"
       ]
     }
   ],
@@ -214,6 +223,11 @@
           "Item2": "[1.0.0, )"
         }
       ]
+    },
+    "OIGenerator": {
+      "Id": "OIGenerator",
+      "Version": "0.0.1",
+      "Dependencies": []
     },
     "SharpZipLib": {
       "Id": "SharpZipLib",

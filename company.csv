@@ -1,5 +1,5 @@
-companyName,SearchValue
-Cintas,cintas
-Rhino,rhino
-Ryan,ryan
-BHD,bhd
+companyName,searchValue,OICompanyCode,OICompanyName
+Cintas,cintas,CINTAS,Cintas
+Rhino,rhino,RHINO,Rhino
+Ryan,ryan,RYAN,Ryan's Coffee Services Ltd
+BHD,bhd,BHD,BHD

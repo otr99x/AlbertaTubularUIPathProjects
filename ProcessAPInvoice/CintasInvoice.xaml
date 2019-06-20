@@ -2,6 +2,9 @@
   <x:Members>
     <x:Property Name="InvoiceFile" Type="InArgument(x:String)" />
     <x:Property Name="InvoiceNumber" Type="OutArgument(x:String)" />
+    <x:Property Name="InvoiceDate" Type="OutArgument(x:String)" />
+    <x:Property Name="InvoiceTotal" Type="OutArgument(x:String)" />
+    <x:Property Name="GstTotal" Type="OutArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -64,16 +67,13 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="invoiceFields" />
       <Variable x:TypeArguments="x:String" Name="invoiceFileText" />
-      <Variable x:TypeArguments="x:String" Name="invoiceDate" />
-      <Variable x:TypeArguments="x:String" Name="gstTotal" />
-      <Variable x:TypeArguments="x:String" Name="invoiceTotal" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[InvoiceFile=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,208" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[InvoiceFile = &quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,208" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Throw Exception="[new Exception(&quot;BlankInvoiceFile exception!&quot;+VbCrLf+VbCrLf+&quot;Calling workflow either passed a blank invoice filename or this sequence was executed independently.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
       </If.Then>
@@ -85,38 +85,38 @@
         <OutArgument x:TypeArguments="x:String">[InvoiceNumber]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(2) .value]</InArgument>
+        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(2).value]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign sap:VirtualizedContainerService.HintSize="464,60" sap2010:WorkflowViewState.IdRef="Assign_2">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[invoiceDate]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[InvoiceDate]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(4) .value]</InArgument>
+        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(4).value]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign sap:VirtualizedContainerService.HintSize="464,60" sap2010:WorkflowViewState.IdRef="Assign_3">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[gstTotal]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[GstTotal]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(6) .value]</InArgument>
+        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(6).value]</InArgument>
       </Assign.Value>
     </Assign>
     <Assign sap:VirtualizedContainerService.HintSize="464,60" sap2010:WorkflowViewState.IdRef="Assign_4">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[invoiceTotal]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[InvoiceTotal]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(8) .value]</InArgument>
+        <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(8).value]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Cintas date formatted as M/d/yy (might be M/dd/yy)&#xD;&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xD;&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;M/dd/yy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="464,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+    <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Cintas date formatted as M/d/yy (might be M/dd/yy)&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;M/dd/yy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="464,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
       <ui:InvokeCode.Arguments>
         <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[invoiceDate]</InOutArgument>
       </ui:InvokeCode.Arguments>
     </ui:InvokeCode>
-    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="464,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Invoice number: &quot; +&quot;&lt;&quot;+ InvoiceNumber +&quot;&gt;&quot;+VbCrLf+&#xA;&quot;Invoice date: &quot; +&quot;&lt;&quot;+ invoiceDate +&quot;&gt;&quot;+VbCrLf+&#xA;&quot;GST Total: &quot; +&quot;&lt;&quot;+ gstTotal +&quot;&gt;&quot;+VbCrLf+&#xA;&quot;Invoice Total: &quot; +&quot;&lt;&quot;+ invoiceTotal +&quot;&gt;&quot;]" />
+    <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="464,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Invoice Number: &quot; +&quot;&lt;&quot;+ InvoiceNumber +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice Date: &quot; +&quot;&lt;&quot;+ InvoiceDate +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;GST Total: &quot; +&quot;&lt;&quot;+ GstTotal +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice Total: &quot; +&quot;&lt;&quot;+ InvoiceTotal +&quot;&gt;&quot;]" />
   </Sequence>
 </Activity>

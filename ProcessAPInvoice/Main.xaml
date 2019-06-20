@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="outputAttachmentFolder" Type="InArgument(x:String)" />
     <x:Property Name="companyListCSV" Type="InArgument(x:String)" />
@@ -6,10 +6,10 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>704,756</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>704,716</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
-    <sco:Collection x:TypeArguments="x:String">
+    <scg:List x:TypeArguments="x:String" Capacity="23">
       <x:String>System.Activities</x:String>
       <x:String>System.Activities.Statements</x:String>
       <x:String>System.Activities.Expressions</x:String>
@@ -32,10 +32,11 @@
       <x:String>UiPath.Core</x:String>
       <x:String>UiPath.Core.Activities</x:String>
       <x:String>System.Xml.Serialization</x:String>
-    </sco:Collection>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </scg:List>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
-    <sco:Collection x:TypeArguments="AssemblyReference">
+    <scg:List x:TypeArguments="AssemblyReference" Capacity="21">
       <AssemblyReference>System.Activities</AssemblyReference>
       <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
@@ -56,7 +57,8 @@
       <AssemblyReference>UiPath.Excel</AssemblyReference>
       <AssemblyReference>UiPath.Mail</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
-    </sco:Collection>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+    </scg:List>
   </TextExpression.ReferencesForImplementation>
   <Flowchart DisplayName="Flowchart" sap:VirtualizedContainerService.HintSize="664,636" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
@@ -87,22 +89,24 @@
           <av:PointCollection x:Key="ConnectorLocation">380,488.04 380,537.04</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:ForEachRow CurrentIndex="[i]" DataTable="[companyTable]" DisplayName="For Each Row - Company" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
+      <ui:ForEachRow CurrentIndex="[i]" DataTable="[companyTable]" DisplayName="For Each Row - Company" sap:VirtualizedContainerService.HintSize="765,2874" sap2010:WorkflowViewState.IdRef="ForEachRow_1">
         <ui:ForEachRow.Body>
           <ActivityAction x:TypeArguments="sd:DataRow">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Body - For Each Company" sap:VirtualizedContainerService.HintSize="536,1822" sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <Sequence DisplayName="Body - For Each Company" sap:VirtualizedContainerService.HintSize="735,2726" sap2010:WorkflowViewState.IdRef="Sequence_2">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:String" Name="companyName" />
+                <Variable x:TypeArguments="x:String" Name="OICompanyName" />
+                <Variable x:TypeArguments="x:String" Name="OICompanyCode" />
               </Sequence.Variables>
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Assign sap:VirtualizedContainerService.HintSize="514,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+              <Assign sap:VirtualizedContainerService.HintSize="713,60" sap2010:WorkflowViewState.IdRef="Assign_6">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[companyName]</OutArgument>
                 </Assign.To>
@@ -110,7 +114,7 @@
                   <InArgument x:TypeArguments="x:String">[row.Item(0).ToString()]</InArgument>
                 </Assign.Value>
               </Assign>
-              <Assign sap:VirtualizedContainerService.HintSize="514,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+              <Assign sap:VirtualizedContainerService.HintSize="713,60" sap2010:WorkflowViewState.IdRef="Assign_5">
                 <Assign.To>
                   <OutArgument x:TypeArguments="x:String">[companyFolder]</OutArgument>
                 </Assign.To>
@@ -118,70 +122,100 @@
                   <InArgument x:TypeArguments="x:String">[outputFolder + Path.DirectorySeparatorChar + companyName]</InArgument>
                 </Assign.Value>
               </Assign>
-              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="514,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Processing folder: &quot; + companyFolder]" />
-              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each - File" sap:VirtualizedContainerService.HintSize="514,1367" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Directory.GetFiles (companyFolder)]">
+              <Assign sap:VirtualizedContainerService.HintSize="713,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[OICompanyCode]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[row.Item(2).ToString()]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Assign sap:VirtualizedContainerService.HintSize="713,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[OICompanyName]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[row.Item(3).ToString()]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="713,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Processing folder: &quot; + companyFolder]" />
+              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="{x:Null}" DisplayName="For Each - File" sap:VirtualizedContainerService.HintSize="713,2071" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Directory.GetFiles (companyFolder)]">
                 <ui:ForEach.Body>
                   <ActivityAction x:TypeArguments="x:Object">
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="x:Object" Name="fileName" />
                     </ActivityAction.Argument>
-                    <Sequence DisplayName="Body - For Each File" sap:VirtualizedContainerService.HintSize="498,1233" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                    <Sequence DisplayName="Body - For Each File" sap:VirtualizedContainerService.HintSize="697,1937" sap2010:WorkflowViewState.IdRef="Sequence_1">
                       <Sequence.Variables>
-                        <Variable x:TypeArguments="x:String" Name="invoiceFile" />
-                        <Variable x:TypeArguments="x:String" Name="invoiceNumber" />
+                        <Variable x:TypeArguments="x:String" Name="InvoiceFile" />
+                        <Variable x:TypeArguments="x:String" Name="InvoiceNumber" />
                         <Variable x:TypeArguments="x:String" Name="newInvoiceFile" />
+                        <Variable x:TypeArguments="x:String" Name="confirmYN" />
+                        <Variable x:TypeArguments="x:String" Name="InvoiceDate" />
+                        <Variable x:TypeArguments="x:String" Name="InvoiceTotal" />
+                        <Variable x:TypeArguments="x:String" Name="GstTotal" />
+                        <Variable x:TypeArguments="x:String" Name="OIResult" />
                       </Sequence.Variables>
                       <sap:WorkflowViewStateService.ViewState>
                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <Assign sap:VirtualizedContainerService.HintSize="476,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                      <Assign sap:VirtualizedContainerService.HintSize="675,60" sap2010:WorkflowViewState.IdRef="Assign_7">
                         <Assign.To>
-                          <OutArgument x:TypeArguments="x:String">[invoiceFile]</OutArgument>
+                          <OutArgument x:TypeArguments="x:String">[InvoiceFile]</OutArgument>
                         </Assign.To>
                         <Assign.Value>
                           <InArgument x:TypeArguments="x:String">[fileName.ToString()]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="476,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Invoice file: &quot; + invoiceFile]" />
-                      <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[companyName]" sap:VirtualizedContainerService.HintSize="476,337" sap2010:WorkflowViewState.IdRef="Switch`1_1">
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="675,91" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Invoice file: &quot; + InvoiceFile]" />
+                      <Switch x:TypeArguments="x:String" DisplayName="Switch" Expression="[companyName]" sap:VirtualizedContainerService.HintSize="675,204" sap2010:WorkflowViewState.IdRef="Switch`1_1">
                         <Switch.Default>
-                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="Unknown Company!" />
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Error" Message="[&quot;Unknown Company!&quot;]" />
                         </Switch.Default>
                         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="Cintas" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="CintasInvoice.xaml">
                           <ui:InvokeWorkflowFile.Arguments>
-                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[invoiceFile]</InArgument>
-                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[invoiceNumber]</OutArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[InvoiceFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[InvoiceNumber]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceDate">[InvoiceDate]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceTotal">[InvoiceTotal]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="GstTotal">[GstTotal]</OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                         </ui:InvokeWorkflowFile>
                         <x:Null x:Key="Rhino" />
                         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="Ryan" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="RyanInvoice.xaml">
                           <ui:InvokeWorkflowFile.Arguments>
-                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[invoiceFile]</InArgument>
-                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[invoiceNumber]</OutArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[InvoiceFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[InvoiceNumber]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceDate">[InvoiceDate]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceTotal">[InvoiceTotal]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="GstTotal">[GstTotal]</OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                         </ui:InvokeWorkflowFile>
                         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="BHD" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="BHDInvoice.xaml">
                           <ui:InvokeWorkflowFile.Arguments>
-                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[invoiceFile]</InArgument>
-                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[invoiceNumber]</OutArgument>
+                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[InvoiceFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[InvoiceNumber]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceDate">[InvoiceDate]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceTotal">[InvoiceTotal]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="GstTotal">[GstTotal]</OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                         </ui:InvokeWorkflowFile>
                       </Switch>
-                      <If Condition="[InvoiceNumber = &quot;&quot;]" sap:VirtualizedContainerService.HintSize="476,208" sap2010:WorkflowViewState.IdRef="If_3">
+                      <If Condition="[invoiceNumber = &quot;&quot;]" sap:VirtualizedContainerService.HintSize="675,208" sap2010:WorkflowViewState.IdRef="If_3">
                         <If.Then>
                           <Assign sap:VirtualizedContainerService.HintSize="242,60" sap2010:WorkflowViewState.IdRef="Assign_8">
                             <Assign.To>
                               <OutArgument x:TypeArguments="x:String">[invoiceNumber]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="x:String">INVOICENO</InArgument>
+                              <InArgument x:TypeArguments="x:String">NOINVOICENO</InArgument>
                             </Assign.Value>
                           </Assign>
                         </If.Then>
                       </If>
-                      <Assign sap:VirtualizedContainerService.HintSize="476,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+                      <Assign sap:VirtualizedContainerService.HintSize="675,60" sap2010:WorkflowViewState.IdRef="Assign_9">
                         <Assign.To>
                           <OutArgument x:TypeArguments="x:String">[newInvoiceFile]</OutArgument>
                         </Assign.To>
@@ -189,8 +223,37 @@
                           <InArgument x:TypeArguments="x:String">[companyFolder+Path.DirectorySeparatorChar+companyName+"-"+invoiceNumber+"-"+DateTime.Now.Date.ToString("yyyyMMdd")+Path.GetExtension(invoiceFile)]</InArgument>
                         </Assign.Value>
                       </Assign>
-                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="476,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Renaming File: &quot; +VbCrLf+&#xA;&quot;  Old Filename: &quot; + invoiceFile +VbCrLf+&#xA;&quot;  New Filename: &quot; + newInvoiceFile]" />
-                      <ui:MoveFile ContinueOnError="{x:Null}" Destination="[newInvoiceFile]" DisplayName="Move File - Rename" sap:VirtualizedContainerService.HintSize="476,22" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="False" Path="[invoiceFile]" />
+                      <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="675,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Renaming File: &quot; +VbCrLf+&#xA;&quot;  Old Filename: &quot; + invoiceFile +VbCrLf+&#xA;&quot;  New Filename: &quot; + newInvoiceFile]" />
+                      <ui:MoveFile ContinueOnError="{x:Null}" Destination="[newInvoiceFile]" DisplayName="Move File - Rename" sap:VirtualizedContainerService.HintSize="675,22" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="False" Path="[invoiceFile]" />
+                      <ui:MessageBox Buttons="YesNo" Caption="Confirmation" ChosenButton="[confirmYN]" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="675,59" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;Proceed with &quot; + companyName + &quot; Invoice upload to OpenInvoice?&quot; + VbCrLf + VbCrLf +&#xA;&quot;Invoice Number: &quot; + invoiceNumber + VbCrLf +&#xA;&quot;Invoice Date: &quot; + InvoiceDate +VbCrLf+&#xA;&quot;GST Total: &quot; + GstTotal +VbCrLf+&#xA;&quot;Invoice Total: &quot; + InvoiceTotal]" TopMost="True" />
+                      <If Condition="[confirmYN = &quot;Yes&quot;]" sap:VirtualizedContainerService.HintSize="675,698" sap2010:WorkflowViewState.IdRef="If_6">
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="336,550" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Uploading Invoice to OpenInvoice...&quot;]" />
+                            <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim endPoint As String = &quot;https://onboard-api.openinvoice.com/docp/supply-chain/v1/invoices&quot;&#xD;&#xA;Dim supplierDunns As String = &quot;127369973&quot;&#xD;&#xA;Dim supplierDept As String = &quot;01&quot;&#xD;&#xA;&#xD;&#xA;Dim invoiceObj As OIGenerator.Invoice = New OIGenerator.Invoice()&#xD;&#xA;invoiceObj.invoiceNumber = InvoiceNumber&#xD;&#xA;invoiceObj.invoiceDate = InvoiceDate&#xD;&#xA;invoiceObj.gstTotal = GstTotal&#xD;&#xA;invoiceObj.invoiceTotal = InvoiceTotal&#xD;&#xA;invoiceObj.invoiceType = &quot;Original Invoice&quot;&#xD;&#xA;invoiceObj.companyCode = OICompanyCode&#xD;&#xA;invoiceObj.companyName = OICompanyName&#xD;&#xA;invoiceObj.currencyCode = &quot;CAD&quot;&#xD;&#xA;invoiceObj.taxType = &quot;GST&quot;&#xD;&#xA;&#xD;&#xA;Dim generator As OIGenerator.XMLOIGenerator = New OIGenerator.XMLOIGenerator(supplierDunns, supplierDept, endPoint)&#xD;&#xA;generator.generateRequest(supplierDunns, supplierDept, InvoiceFile, invoiceObj)&#xD;&#xA;generator.getRequestContent()&#xD;&#xA;&#xD;&#xA;OIResult = generator.send()" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="314,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+                              <ui:InvokeCode.Arguments>
+                                <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[InvoiceFile]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[InvoiceNumber]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="InvoiceDate">[InvoiceDate]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="GstTotal">[GstTotal]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="InvoiceTotal">[InvoiceTotal]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="OICompanyCode">[OICompanyCode]</InArgument>
+                                <InArgument x:TypeArguments="x:String" x:Key="OICompanyName">[OICompanyName]</InArgument>
+                                <OutArgument x:TypeArguments="x:String" x:Key="OIResult">[OIResult]</OutArgument>
+                              </ui:InvokeCode.Arguments>
+                            </ui:InvokeCode>
+                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Response from OpenInvoice: &quot; + OIResult]" />
+                          </Sequence>
+                        </If.Then>
+                        <If.Else>
+                          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Invoice upload cancelled.&quot;]" />
+                        </If.Else>
+                      </If>
                     </Sequence>
                   </ActivityAction>
                 </ui:ForEach.Body>

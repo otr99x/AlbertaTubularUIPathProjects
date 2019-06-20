@@ -2,6 +2,9 @@
   <x:Members>
     <x:Property Name="InvoiceFile" Type="InArgument(x:String)" />
     <x:Property Name="InvoiceNumber" Type="OutArgument(x:String)" />
+    <x:Property Name="InvoiceDate" Type="OutArgument(x:String)" />
+    <x:Property Name="InvoiceTotal" Type="OutArgument(x:String)" />
+    <x:Property Name="GstTotal" Type="OutArgument(x:String)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
@@ -77,11 +80,6 @@
             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
           </ActivityAction.Argument>
           <Sequence DisplayName="Do - Open Acrobat" sap:VirtualizedContainerService.HintSize="522,3493" sap2010:WorkflowViewState.IdRef="Sequence_1">
-            <Sequence.Variables>
-              <Variable x:TypeArguments="x:String" Name="invoiceDate" />
-              <Variable x:TypeArguments="x:String" Name="gstTotal" />
-              <Variable x:TypeArguments="x:String" Name="invoiceTotal" />
-            </Sequence.Variables>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -125,7 +123,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_2" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Output="{x:Null}" Text="{x:Null}" AllowedCharacters="" ComputeSkewAngle="False" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_2" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -150,10 +148,10 @@
                         </ui:Target>
                       </ui:GetVisibleText.Target>
                       <ui:GetVisibleText.Text>
-                        <OutArgument x:TypeArguments="x:String">[invoiceDate]</OutArgument>
+                        <OutArgument x:TypeArguments="x:String">[InvoiceDate]</OutArgument>
                       </ui:GetVisibleText.Text>
                     </ui:GetVisibleText>
-                    <If Condition="[invoiceDate=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_4">
+                    <If Condition="[InvoiceDate=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_4">
                       <If.Then>
                         <ui:GetOCRText WordsInfo="{x:Null}" DisplayName="Get OCR Text - Invoice Date" sap:VirtualizedContainerService.HintSize="314,168" sap2010:WorkflowViewState.IdRef="GetOCRText_3">
                           <ui:GetOCRText.OCREngine>
@@ -161,7 +159,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_3" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Output="{x:Null}" Text="{x:Null}" AllowedCharacters="" ComputeSkewAngle="False" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_3" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="3" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -172,7 +170,7 @@
                             </ui:Target>
                           </ui:GetOCRText.Target>
                           <ui:GetOCRText.Text>
-                            <OutArgument x:TypeArguments="x:String">[invoiceDate]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String">[InvoiceDate]</OutArgument>
                           </ui:GetOCRText.Text>
                         </ui:GetOCRText>
                       </If.Then>
@@ -191,10 +189,10 @@
                         </ui:Target>
                       </ui:GetVisibleText.Target>
                       <ui:GetVisibleText.Text>
-                        <OutArgument x:TypeArguments="x:String">[gstTotal]</OutArgument>
+                        <OutArgument x:TypeArguments="x:String">[GstTotal]</OutArgument>
                       </ui:GetVisibleText.Text>
                     </ui:GetVisibleText>
-                    <If Condition="[gstTotal=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_5">
+                    <If Condition="[GstTotal=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_5">
                       <If.Then>
                         <ui:GetOCRText WordsInfo="{x:Null}" DisplayName="Get OCR Text - GST Total" sap:VirtualizedContainerService.HintSize="314,168" sap2010:WorkflowViewState.IdRef="GetOCRText_4">
                           <ui:GetOCRText.OCREngine>
@@ -202,7 +200,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_4" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="4" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Output="{x:Null}" Text="{x:Null}" AllowedCharacters="" ComputeSkewAngle="False" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_4" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="4" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -213,7 +211,7 @@
                             </ui:Target>
                           </ui:GetOCRText.Target>
                           <ui:GetOCRText.Text>
-                            <OutArgument x:TypeArguments="x:String">[gstTotal]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String">[GstTotal]</OutArgument>
                           </ui:GetOCRText.Text>
                         </ui:GetOCRText>
                       </If.Then>
@@ -227,10 +225,10 @@
                         </ui:Target>
                       </ui:GetVisibleText.Target>
                       <ui:GetVisibleText.Text>
-                        <OutArgument x:TypeArguments="x:String">[invoiceTotal]</OutArgument>
+                        <OutArgument x:TypeArguments="x:String">[InvoiceTotal]</OutArgument>
                       </ui:GetVisibleText.Text>
                     </ui:GetVisibleText>
-                    <If Condition="[invoiceTotal=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_6">
+                    <If Condition="[InvoiceTotal=&quot;&quot;]" sap:VirtualizedContainerService.HintSize="464,315" sap2010:WorkflowViewState.IdRef="If_6">
                       <If.Then>
                         <ui:GetOCRText WordsInfo="{x:Null}" DisplayName="Get OCR Text - Invoice Total" sap:VirtualizedContainerService.HintSize="314,168" sap2010:WorkflowViewState.IdRef="GetOCRText_5">
                           <ui:GetOCRText.OCREngine>
@@ -238,7 +236,7 @@
                               <ActivityFunc.Argument>
                                 <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
                               </ActivityFunc.Argument>
-                              <ui:GoogleOCR FilterRegion="{x:Null}" Text="{x:Null}" AllowedCharacters="" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_5" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="4" />
+                              <ui:GoogleOCR FilterRegion="{x:Null}" Output="{x:Null}" Text="{x:Null}" AllowedCharacters="" ComputeSkewAngle="False" DeniedCharacters="" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_5" Image="[Image]" Invert="False" Language="eng" Profile="Screen" Scale="4" />
                             </ActivityFunc>
                           </ui:GetOCRText.OCREngine>
                           <ui:GetOCRText.Target>
@@ -249,7 +247,7 @@
                             </ui:Target>
                           </ui:GetOCRText.Target>
                           <ui:GetOCRText.Text>
-                            <OutArgument x:TypeArguments="x:String">[invoiceTotal]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String">[InvoiceTotal]</OutArgument>
                           </ui:GetOCRText.Text>
                         </ui:GetOCRText>
                       </If.Then>
@@ -258,20 +256,20 @@
                 </ActivityAction>
               </ui:WindowScope.Body>
             </ui:WindowScope>
-            <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xD;&#xA;'&#xD;&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xD;&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;'&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xD;&#xA;IO_gstTotal = IO_gstTotal.Trim&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;'&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xA;'&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xA;'&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xA;IO_gstTotal = IO_gstTotal.Trim&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot; &quot;,&quot;&quot;)&#xA;'&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot; &quot;,&quot;&quot;)&#xA;" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
               <ui:InvokeCode.Arguments>
                 <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceNumber">[InvoiceNumber]</InOutArgument>
-                <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[invoiceDate]</InOutArgument>
-                <InOutArgument x:TypeArguments="x:String" x:Key="IO_gstTotal">[gstTotal]</InOutArgument>
-                <InOutArgument x:TypeArguments="x:String" x:Key="IO_invoiceTotal">[invoiceTotal]</InOutArgument>
+                <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[InvoiceDate]</InOutArgument>
+                <InOutArgument x:TypeArguments="x:String" x:Key="IO_gstTotal">[GstTotal]</InOutArgument>
+                <InOutArgument x:TypeArguments="x:String" x:Key="IO_invoiceTotal">[InvoiceTotal]</InOutArgument>
               </ui:InvokeCode.Arguments>
             </ui:InvokeCode>
-            <ui:InvokeCode ContinueOnError="{x:Null}" Code="' BHD's date formatted as MM/dd/yyyy&#xD;&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xD;&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;MM/dd/yyyy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+            <ui:InvokeCode ContinueOnError="{x:Null}" Code="' BHD's date formatted as MM/dd/yyyy&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;MM/dd/yyyy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="500,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
               <ui:InvokeCode.Arguments>
-                <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[invoiceDate]</InOutArgument>
+                <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[InvoiceDate]</InOutArgument>
               </ui:InvokeCode.Arguments>
             </ui:InvokeCode>
-            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="500,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Invoice number: &quot; +&quot;&lt;&quot;+ InvoiceNumber +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice date: &quot; +&quot;&lt;&quot;+ invoiceDate +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;GST Total: &quot; +&quot;&lt;&quot;+ gstTotal +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice Total: &quot; +&quot;&lt;&quot;+ invoiceTotal +&quot;&gt;&quot;]" />
+            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="500,91" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Invoice Number: &quot; +&quot;&lt;&quot;+ InvoiceNumber +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice Date: &quot; +&quot;&lt;&quot;+ InvoiceDate +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;GST Total: &quot; +&quot;&lt;&quot;+ GstTotal +&quot;&gt;&quot;+VbCrLf+&#xD;&#xA;&quot;Invoice Total: &quot; +&quot;&lt;&quot;+ InvoiceTotal +&quot;&gt;&quot;]" />
             <ui:CloseApplication DisplayName="Close Application 'AcroRd32.exe Adobe'" sap:VirtualizedContainerService.HintSize="500,106" sap2010:WorkflowViewState.IdRef="CloseApplication_1">
               <ui:CloseApplication.Target>
                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a92dc645aa8a5f1eedaf8d64d4cf5335" WaitForReady="INTERACTIVE" />

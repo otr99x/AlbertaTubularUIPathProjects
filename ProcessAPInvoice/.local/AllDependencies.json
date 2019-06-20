@@ -201,6 +201,15 @@
           "lib/net45/NPOI.dll": {}
         }
       },
+      "OIGenerator/0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/_._": {}
+        },
+        "runtime": {
+          "lib/OIGenerator.dll": {}
+        }
+      },
       "SharpZipLib/1.0.0": {
         "type": "package",
         "compile": {
@@ -780,6 +789,17 @@
         "npoi.nuspec"
       ]
     },
+    "OIGenerator/0.0.1": {
+      "sha512": "no6bwbr4vhxwbuRrcr6Ktq+zntIySs9xt1miSzHrZdqEpsL1R3NWRXHP+8Hj9oVUe1/MmfHKP96ZUpSsC9RO7g==",
+      "type": "package",
+      "path": "oigenerator/0.0.1",
+      "files": [
+        ".nupkg.metadata",
+        "lib/OIGenerator.dll",
+        "oigenerator.0.0.1.nupkg.sha512",
+        "oigenerator.nuspec"
+      ]
+    },
     "SharpZipLib/1.0.0": {
       "sha512": "YuYztmY3jEb21F6e5LIPHJjApdtzdCPQ284UzsCKNfkgW71bukFHJES6RbKi+wm053XzFg0LX5/2vj/9gl8F/g==",
       "type": "package",
@@ -1150,6 +1170,7 @@
   "projectFileDependencyGroups": {
     "": [],
     ".NETFramework,Version=v4.6.1": [
+      "OIGenerator >= 0.0.1 <= 0.0.1",
       "UiPath.Excel.Activities >= 2.6.1 <= 2.6.1",
       "UiPath.Mail.Activities >= 1.5.0 <= 1.5.0",
       "UiPath.PDF.Activities >= 2.0.0 <= 2.0.0",
@@ -1171,6 +1192,11 @@
     "frameworks": {
       "net461": {
         "dependencies": {
+          "OIGenerator": {
+            "include": "Runtime",
+            "target": "Package",
+            "version": "[0.0.1, 0.0.1]"
+          },
           "UiPath.Excel.Activities": {
             "include": "Runtime",
             "target": "Package",
