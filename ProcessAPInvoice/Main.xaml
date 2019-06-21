@@ -183,7 +183,15 @@
                             <OutArgument x:TypeArguments="x:String" x:Key="GstTotal">[GstTotal]</OutArgument>
                           </ui:InvokeWorkflowFile.Arguments>
                         </ui:InvokeWorkflowFile>
-                        <x:Null x:Key="Rhino" />
+                        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="Rhino" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="RhinoInvoice.xaml">
+                          <ui:InvokeWorkflowFile.Arguments>
+                            <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[InvoiceFile]</InArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceNumber">[InvoiceNumber]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceDate">[InvoiceDate]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="InvoiceTotal">[InvoiceTotal]</OutArgument>
+                            <OutArgument x:TypeArguments="x:String" x:Key="GstTotal">[GstTotal]</OutArgument>
+                          </ui:InvokeWorkflowFile.Arguments>
+                        </ui:InvokeWorkflowFile>
                         <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" x:Key="Ryan" sap:VirtualizedContainerService.HintSize="314,87" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="RyanInvoice.xaml">
                           <ui:InvokeWorkflowFile.Arguments>
                             <InArgument x:TypeArguments="x:String" x:Key="InvoiceFile">[InvoiceFile]</InArgument>
