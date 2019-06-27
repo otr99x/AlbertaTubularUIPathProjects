@@ -9,7 +9,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>737,1893</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>759,2625</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="24">
@@ -63,7 +63,7 @@
       <AssemblyReference>System.ValueTuple</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Sequence - RhinoInvoice" sap:VirtualizedContainerService.HintSize="697,1813" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence DisplayName="Sequence - RhinoInvoice" sap:VirtualizedContainerService.HintSize="719,2545" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="invoiceFields" />
       <Variable x:TypeArguments="x:String" Name="invoiceFileText" />
@@ -73,33 +73,56 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[InvoiceFile = &quot;&quot;]" sap:VirtualizedContainerService.HintSize="675,208" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[InvoiceFile = &quot;&quot;]" sap:VirtualizedContainerService.HintSize="697,208" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Throw Exception="[new Exception(&quot;BlankInvoiceFile exception!&quot;+VbCrLf+VbCrLf+&quot;Calling workflow either passed a blank invoice filename or this sequence was executed independently.&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
       </If.Then>
     </If>
-    <ui:ReadPDFWithOCR DegreeOfParallelism="-1" DisplayName="Read PDF With OCR" FileName="[InvoiceFile]" sap:VirtualizedContainerService.HintSize="675,131" sap2010:WorkflowViewState.IdRef="ReadPDFWithOCR_1" ImageDpi="300" Range="All" Text="[invoiceFileText]">
-      <ui:ReadPDFWithOCR.OCREngine>
-        <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
-          <ActivityFunc.Argument>
-            <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
-          </ActivityFunc.Argument>
-          <ui:GoogleOCR FilterRegion="{x:Null}" Output="{x:Null}" Text="{x:Null}" AllowedCharacters="" ComputeSkewAngle="False" DeniedCharacters="" DisplayName="Tesseract OCR" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[Image]" Invert="False" Language="eng" Profile="Legacy" Scale="1" />
-        </ActivityFunc>
-      </ui:ReadPDFWithOCR.OCREngine>
-    </ui:ReadPDFWithOCR>
-    <ui:Matches BuilderPattern="(Invoice\sNo\.:)\s+(\d+).*[\r\n][\s\S]+(Date:)\s+(\d+\/\d+\/\d+)[\r\n][\s\S]+(GST)\s+(\d{1,3}\,?\d{1,3}\.\d{2})[\r\n][\s\S]+(Amount Owing)\s+(\d{1,3}\,?\d{1,3}\.\d{2})" sap:VirtualizedContainerService.HintSize="675,59" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[invoiceFileText]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Invoice\\sNo\\.:)\\s+(\\d+).*[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:1,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Date:)\\s+(\\d+\\\/\\d+\\\/\\d+)[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:2,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(GST)\\s+(\\d{1,3}\\,?\\d{1,3}\\.\\d{2})[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:3,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Amount Owing)\\s+(\\d{1,3}\\,?\\d{1,3}\\.\\d{2})&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="(Invoice\sNo\.:)\s+(\d+).*[\r\n][\s\S]+(Date:)\s+(\d+\/\d+\/\d+)[\r\n][\s\S]+(GST)\s+(\d{1,3}\,?\d{1,3}\.\d{2})[\r\n][\s\S]+(Amount Owing)\s+(\d{1,3}\,?\d{1,3}\.\d{2})" RegexOption="IgnoreCase" Result="[invoiceFields]" />
-    <If Condition="[invoiceFields.Count = 0]" sap:VirtualizedContainerService.HintSize="675,1171" sap2010:WorkflowViewState.IdRef="If_2">
+    <ui:ReadPDFText DisplayName="Read PDF Text" FileName="[InvoiceFile]" sap:VirtualizedContainerService.HintSize="697,59" sap2010:WorkflowViewState.IdRef="ReadPDFText_1" Range="All" Text="[invoiceFileText]" />
+    <ui:Matches BuilderPattern="(Invoice\sNo\.:)\s+(\d+).*[\r\n][\s\S]+(Date:)\s+(\d+\/\d+\/\d+)[\r\n][\s\S]+(GST)\s+(\d{0,3}\,?\d{1,3}\.\d{2})[\r\n][\s\S]+(Total Amount)\s+(\d{0,3}\,?\d{1,3}\.\d{2})" sap:VirtualizedContainerService.HintSize="697,59" sap2010:WorkflowViewState.IdRef="Matches_2" Input="[invoiceFileText]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Invoice\\sNo\\.:)\\s+(\\d+).*[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:1,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Date:)\\s+(\\d+\\\/\\d+\\\/\\d+)[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:2,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(GST)\\s+(\\d{0,3}\\,?\\d{1,3}\\.\\d{2})[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:3,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Total Amount)\\s+(\\d{0,3}\\,?\\d{1,3}\\.\\d{2})&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="(Invoice\sNo\.:)\s+(\d+).*[\r\n][\s\S]+(Date:)\s+(\d+\/\d+\/\d+)[\r\n][\s\S]+(GST)\s+(\d{0,3}\,?\d{1,3}\.\d{2})[\r\n][\s\S]+(Total Amount)\s+(\d{0,3}\,?\d{1,3}\.\d{2})" RegexOption="IgnoreCase" Result="[invoiceFields]" />
+    <If Condition="[invoiceFields.Count = 0]" sap:VirtualizedContainerService.HintSize="697,633" sap2010:WorkflowViewState.IdRef="If_3">
       <If.Then>
-        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[&quot;OCR Reading of PDF Failed!&quot; + VbCrLf + VbCrLf + &#xD;&#xA;InvoiceFile + VbCrLf+ VbCrLf + &#xD;&#xA;invoiceFileText]" TopMost="True" />
-      </If.Then>
-      <If.Else>
-        <Sequence sap:VirtualizedContainerService.HintSize="336,1023" sap2010:WorkflowViewState.IdRef="Sequence_3">
+        <Sequence sap:VirtualizedContainerService.HintSize="336,485" sap2010:WorkflowViewState.IdRef="Sequence_5">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Reading of PDF Failed! Trying OCR...&quot;]" />
+          <ui:ReadPDFWithOCR DegreeOfParallelism="-1" DisplayName="Read PDF With OCR" FileName="[InvoiceFile]" sap:VirtualizedContainerService.HintSize="314,131" sap2010:WorkflowViewState.IdRef="ReadPDFWithOCR_1" ImageDpi="300" Range="All" Text="[invoiceFileText]">
+            <ui:ReadPDFWithOCR.OCREngine>
+              <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
+                <ActivityFunc.Argument>
+                  <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+                </ActivityFunc.Argument>
+                <ui:GoogleOCR FilterRegion="{x:Null}" Output="{x:Null}" Text="{x:Null}" AllowedCharacters="" ComputeSkewAngle="False" DeniedCharacters="" DisplayName="Tesseract OCR" ExtractWords="False" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GoogleOCR_1" Image="[Image]" Invert="False" Language="eng" Profile="Legacy" Scale="1" />
+              </ActivityFunc>
+            </ui:ReadPDFWithOCR.OCREngine>
+          </ui:ReadPDFWithOCR>
+          <ui:Matches BuilderPattern="(Invoice\sNo\.:)\s+(\d+).*[\r\n][\s\S]+(Date:)\s+(\d+\/\d+\/\d+)[\r\n][\s\S]+(GST)\s+(\d{0,3}\,?\d{1,3}\.\d{2})[\r\n][\s\S]+(Total Amount)\s+(\d{0,3}\,?\d{1,3}\.\d{2})" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="Matches_1" Input="[invoiceFileText]" IsBuilderTabModified="True" Model="[{&quot;Index&quot;:0,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Invoice\\sNo\\.:)\\s+(\\d+).*[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:1,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Date:)\\s+(\\d+\\\/\\d+\\\/\\d+)[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:2,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(GST)\\s+(\\d{0,3}\\,?\\d{1,3}\\.\\d{2})[\\r\\n][\\s\\S]+&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null},{&quot;Index&quot;:3,&quot;OperationID&quot;:&quot;LIT&quot;,&quot;OperationName&quot;:&quot;Literal&quot;,&quot;OperationValue&quot;:&quot;(Total Amount)\\s+(\\d{0,3}\\,?\\d{1,3}\\.\\d{2})&quot;,&quot;QuantifierFirstValue&quot;:&quot;1&quot;,&quot;QuantifierID&quot;:&quot;EXT&quot;,&quot;QuantifierName&quot;:&quot;Exactly&quot;,&quot;QuantifierSecondValue&quot;:null}]" Pattern="(Invoice\sNo\.:)\s+(\d+).*[\r\n][\s\S]+(Date:)\s+(\d+\/\d+\/\d+)[\r\n][\s\S]+(GST)\s+(\d{0,3}\,?\d{1,3}\.\d{2})[\r\n][\s\S]+(Total Amount)\s+(\d{0,3}\,?\d{1,3}\.\d{2})" RegexOption="IgnoreCase" Result="[invoiceFields]" />
+        </Sequence>
+      </If.Then>
+    </If>
+    <If Condition="[invoiceFields.Count = 0]" sap:VirtualizedContainerService.HintSize="697,1302" sap2010:WorkflowViewState.IdRef="If_2">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="336,314" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;OCR Reading of PDF Failed!&quot;]" />
+          <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" Buttons="Ok" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="MessageBox_2" Text="[&quot;OCR Reading of PDF Failed!&quot; + VbCrLf + VbCrLf + &#xD;&#xA;InvoiceFile + VbCrLf+ VbCrLf + &#xD;&#xA;invoiceFileText]" TopMost="True" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="336,1154" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Successfully read PDF invoice.&quot;]" />
           <Assign sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_1">
             <Assign.To>
               <OutArgument x:TypeArguments="x:String">[InvoiceNumber]</OutArgument>
@@ -132,7 +155,7 @@
               <InArgument x:TypeArguments="x:String">[invoiceFields(0).groups(8).value]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xD;&#xA;'&#xD;&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xD;&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;'&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xD;&#xA;IO_gstTotal = IO_gstTotal.Trim&#xD;&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;'&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim&#xD;&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot; &quot;,&quot;&quot;)&#xD;&#xA;" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="314,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
+          <ui:InvokeCode ContinueOnError="{x:Null}" Code="IO_InvoiceNumber = IO_InvoiceNumber.Trim&#xA;'&#xA;IO_InvoiceDate = IO_InvoiceDate.Trim&#xA;IO_InvoiceDate = IO_InvoiceDate.Replace(&quot; &quot;,&quot;&quot;)&#xA;'&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xA;IO_gstTotal = IO_gstTotal.Trim&#xA;IO_gstTotal = IO_gstTotal.Replace(&quot; &quot;,&quot;&quot;)&#xA;'&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;$&quot;,&quot;&quot;)&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot;,&quot;,&quot;&quot;)&#xA;IO_invoiceTotal = IO_invoiceTotal.Trim&#xA;IO_invoiceTotal = IO_invoiceTotal.Replace(&quot; &quot;,&quot;&quot;)&#xA;" DisplayName="Invoke Code - Trim Strings" sap:VirtualizedContainerService.HintSize="314,164" sap2010:WorkflowViewState.IdRef="InvokeCode_2">
             <ui:InvokeCode.Arguments>
               <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceNumber">[InvoiceNumber]</InOutArgument>
               <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[InvoiceDate]</InOutArgument>
@@ -140,7 +163,7 @@
               <InOutArgument x:TypeArguments="x:String" x:Key="IO_invoiceTotal">[InvoiceTotal]</InOutArgument>
             </ui:InvokeCode.Arguments>
           </ui:InvokeCode>
-          <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Rhino date formatted as MM/dd/yyyy&#xD;&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xD;&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;MM/dd/yyyy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="314,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
+          <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Rhino date formatted as MM/dd/yyyy&#xA;' OpenInvoice expects dates in yyyy-MM-dd&#xA;IO_InvoiceDate = DateTime.ParseExact(IO_InvoiceDate, &quot;MM/dd/yyyy&quot;, CultureInfo.InvariantCulture).ToString(&quot;yyyy-MM-dd&quot;)" DisplayName="Invoke Code - Format Date" sap:VirtualizedContainerService.HintSize="314,164" sap2010:WorkflowViewState.IdRef="InvokeCode_1">
             <ui:InvokeCode.Arguments>
               <InOutArgument x:TypeArguments="x:String" x:Key="IO_InvoiceDate">[invoiceDate]</InOutArgument>
             </ui:InvokeCode.Arguments>
