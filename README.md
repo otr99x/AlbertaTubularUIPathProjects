@@ -8,7 +8,7 @@ package, OIGenerator to be installed into UiPath.
 
 ## Git Folder structure:
 AlbertaTubularUIPathProjects - home directory
- - company.csv - Company list file. Required by project files.
+ - APCompany.csv - Company list file. Required by project files.
  - ./GetAPInvoice - Get email attachments of AP invoices and save into company folders.
  - ./ProcessAPInvoice - Loop through company folders, open pdf files, scrape invoice number, invoice date, GST total and invoice total.
  - ./projects - Additional supporting modules
@@ -22,13 +22,13 @@ Attachments - Email attachments saved by company.
 
 ## ATP Implemented Folder structure: 
 \\\\ATP-CGY-VFS01\\Evraz\\UiPath Projects - home directory
- - ./lib/APCompany.csv - Company list file. Required by project files.
  - ./bin/GetAPInvoice - Get email attachments of AP invoices and save into company folders.
  - ./bin/ProcessAPInvoice - Loop through company folders, open pdf files, scrape invoice number, invoice date, GST total and invoice total.
  - ./dev/OITools - Additional supporting modules
  - ./dev/OITools/Application - Exe to call OIGenerator dll to verify functionality without requiring UiPath process.
  - ./dev/OITools/OIGenerator - dll to serialize invoice data into an XML message.
  - ./lib/APConfig.xlsx - Configuration file for AP Processes.
+ - ./lib/APCompany.csv - Company list file. Required by project files.
  - ./tmp/APAttachments - Email attachments saved by company.
  - ./tmp/APAttachments/Company1
  - ./tmp/APAttachments/Company2

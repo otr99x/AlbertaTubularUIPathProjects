@@ -3,28 +3,34 @@
   "description": "Alberta Tubular Workflow: Log into email server and save PDF invoice attachments.",
   "main": "Main.xaml",
   "dependencies": {
-    "UiPath.UIAutomation.Activities": "[18.3.6897.22543]",
-    "UiPath.System.Activities": "[18.3.6897.22524]",
-    "UiPath.Excel.Activities": "[2.4.6884.25683]",
-    "UiPath.Mail.Activities": "[1.2.6863.29868]"
+    "UiPath.Excel.Activities": "[2.7.2]",
+    "UiPath.Mail.Activities": "[1.7.2]",
+    "UiPath.System.Activities": "[19.10.1]",
+    "UiPath.UIAutomation.Activities": "[19.11.1]"
   },
-  "schemaVersion": "3.2",
-  "studioVersion": "18.4.0.6",
+  "webServices": [],
+  "schemaVersion": "4.0",
+  "studioVersion": "19.10.1.0",
   "projectVersion": "1.0.6944.37466",
   "runtimeOptions": {
     "autoDispose": false,
+    "isPausable": true,
+    "requiresUserInteraction": true,
+    "supportsPersistence": false,
     "excludedLoggedData": [
       "Private:*",
       "*password*"
-    ]
+    ],
+    "executionType": "Workflow"
   },
-  "projectType": "Workflow",
-  "libraryOptions": {
-    "includeOriginalXaml": false,
-    "privateWorkflows": []
+  "designOptions": {
+    "projectProfile": "Developement",
+    "outputType": "Process",
+    "libraryOptions": {
+      "includeOriginalXaml": false,
+      "privateWorkflows": []
+    },
+    "fileInfos": []
   },
-  "arguments": {
-    "input": [],
-    "output": []
-  }
+  "expressionLanguage": "VisualBasic"
 }
