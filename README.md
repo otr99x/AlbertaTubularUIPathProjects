@@ -13,13 +13,8 @@ AlbertaTubularUIPathProjects - home directory
  - ./ProcessAPInvoice - Loop through company folders, open pdf files, scrape invoice number, invoice date, GST total and invoice total.
  - ./projects - Additional supporting modules
  - ./projects/OITools - C# project to serialize invoice data into an XML message.
- - ./APConfig.xlsx
+ - ./APConfig.xlsx - Config file for all required variables.
  
-Attachments - Email attachments saved by company.
- - ./Company1
- - ./Company2
- - ./...
-
 ## ATP Implemented Folder structure: 
 \\\\ATP-CGY-VFS01\\Evraz\\UiPath Projects - home directory
  - ./bin/GetAPInvoice - Get email attachments of AP invoices and save into company folders.
@@ -37,20 +32,17 @@ Attachments - Email attachments saved by company.
 ## UiPath Project Notes:
 
 ### General:
- - All messages logged using Log Message activity.
+ - Only the location of the config file is hardcoded in the Initialize Variables activity of each process. 
+ - Variables used by the processes are stored in the config file.
+ - For security, the config file values in GitHub are blanked out.
  - Ryan, BHD, Rhino and Cintas invoices implemented.
- - Using system variable CurrentDirectory (current UiPath project folder) to base relative paths from.
- - All projects require a path to Attachments folder. Currently set relative to the UiPath project's current folder at the same level as the home folder.
- - All projects require a path to Company.CSV file. Currently set relative to the UiPath project's current folder in the parent directory.
-
-### GetAPInvoice:
- - All account information in Get Exchange Mail Messages activity has been blanked out for GitHub repository.
-
+ - UiPath execution logs located at C:\\Users\\\<usename>\\AppData\\Local\\UiPath\\Logs
+ 
 ### ProcessAPInvoice:
  - The screenscrape is based on a resolution of 1920x1080 and a maximized Acrobat. **TODO: Rebase resolution to 1280x1024**
  - There is a bug with Acrobat Reader DC 2019 and UiPath where Get Visible Text does not work. The code attempts to read the text, but then failsover to OCR.
- - Cintas invoices place the GST and Invoice totals as line items so the entire PDF is parsed and the text fields are retreived using regular expressions.
- - Rhino invoices place GST total as a line item so the entire PDF is parsed and the text fields are retreived using regular expressions.
+ - Cintas, Rhino and Ryans invoices read the entire PDF file and the text fields are retreived using regular expressions.
+ - BHD invoices are scanned so have to be parsed using OCR.
  - Invoice data is displayed in Message Box requiring confirmation to upload into OpenInvoice.
 
 ## OIGenerator UiPath Dependency:
@@ -63,7 +55,7 @@ Attachments - Email attachments saved by company.
    nuget.exe pack OIGenerator.nuspec  
    **\*** Nuget relies on updated OIGenerator.nuspec configuration.
  - Resulting OIGenerator.0.0.1.nupkg file must be placed in C:\\Users\\\<usename>\\AppData\\Local\\UiPath\\\<UiPath version>\\Packages  
-   **\*** Current UiPath version = app-19.10.1
+   **\*** Current UiPath versions: Enterprise Edition = 19.10.1 Community Edition = app-19.10.4
  - To install into UiPath, select Manage Packages -> Local -> OIGenerator
  - OIGenerator requires the signed spectrux-private.pfx certificate to be installed in the Personal certificate store of Current User.
  
