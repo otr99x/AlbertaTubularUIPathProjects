@@ -46,6 +46,7 @@ AlbertaTubularUIPathProjects - home directory
  - Invoice data is displayed in Message Box requiring confirmation to upload into OpenInvoice.
 
 ## OIGenerator UiPath Dependency:
+ - OIGenerator is a .Net DLL and requires .Net to be installed.
  - Source code located AlbertaTubularUIPathProjects\projects\OITools\OIGenerator
  - To generate the .cs class from the .xsd:  
    xsd.exe /classes /language:cs /namespace:OIGenerator OpenImageInvoiceInput.xsd
@@ -54,10 +55,13 @@ AlbertaTubularUIPathProjects - home directory
  - To create the nuget package:  
    nuget.exe pack OIGenerator.nuspec  
    **\*** Nuget relies on updated OIGenerator.nuspec configuration.
- - Resulting OIGenerator.0.0.1.nupkg file must be placed in C:\\Users\\\<usename>\\AppData\\Local\\UiPath\\\<UiPath version>\\Packages  
+ - Resulting OIGenerator.0.0.1.nupkg file must be placed in folder where UiPath Manage Packages Seetings Local is looking.
+ - For Community Edition = C:\\Users\\\<usename>\\AppData\\Local\\UiPath\\\<UiPath version>\\Packages
    **\*** Current UiPath versions: Enterprise Edition = 19.10.1 Community Edition = app-19.10.4
  - To install into UiPath, select Manage Packages -> Local -> OIGenerator
- - OIGenerator requires the signed spectrux-private.pfx certificate to be installed in the Personal certificate store of Current User.
+ - Installation unpacks the .nupkg into C:\\Users\\<usename>\\.nuget\\packages\\oigenerator\\<version>\\lib
+ - OIGenerator requires the signed spectrux-private.pfx certificate to be installed (MMC.EXE) in the Personal certificate store of Current User.
+ - There is a second certificate,  P2P Certificate Authority, included in the file and must be moved/installed into the Trusted Root certificate store of Current User.
  
  ## Git Notes:
  - Git flags .json and .xaml files as binary and will not show differences between versions.

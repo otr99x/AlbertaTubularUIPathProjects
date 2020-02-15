@@ -1802,15 +1802,15 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Remrin\\.nuget\\packages\\": {}
+    "C:\\Users\\SVC.Evraz\\.nuget\\packages\\": {}
   },
   "project": {
     "restore": {
       "projectUniqueName": "ProcessAPInvoice",
       "projectName": "ProcessAPInvoice",
-      "projectPath": "E:\\Data\\UiPath\\AlbertaTubular\\AlbertaTubularUIPathProjects\\ProcessAPInvoice\\.local",
-      "packagesPath": "C:\\Users\\Remrin\\.nuget\\packages\\",
-      "outputPath": "E:\\Data\\UiPath\\AlbertaTubular\\AlbertaTubularUIPathProjects\\ProcessAPInvoice\\.local"
+      "projectPath": "I:\\UiPath Projects\\bin\\ProcessAPInvoice\\.local",
+      "packagesPath": "C:\\Users\\SVC.Evraz\\.nuget\\packages\\",
+      "outputPath": "I:\\UiPath Projects\\bin\\ProcessAPInvoice\\.local"
     },
     "frameworks": {
       "net461": {
